@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#0a0a0a"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/btnOpenSecond"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fancy_button"
+        android:text="עמוד הבא"
+        app:backgroundTint="@null"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="end"
+        />
+
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fancy_edittext"
+        android:hint="הכנס את שמך"
+        android:inputType="textPersonName"
+        android:padding="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#88FFFFFF"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <Button
+        android:id="@+id/myButton"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fancy_button"
+        android:text="שלח"
+        app:backgroundTint="@null"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/txtGreeting"
+        android:layout_width="399dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/textview_bg"
+        android:padding="10dp"
+        android:text="טקסט לדוגמה"
+        android:textColor="#FFFFFF"
+        />
+
+
+
+</LinearLayout>

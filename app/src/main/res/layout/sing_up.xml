@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <!-- Container Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        app:cardBackgroundColor="#CC282828"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <!-- Header -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="הרשמה למערכת"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_marginBottom="40dp" />
+
+            <!-- Error Message (חשוב! הוסף את זה) -->
+            <TextView
+                android:id="@+id/errorMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6b6b"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/error_background"
+                android:padding="12dp"
+                android:visibility="gone"
+                android:alpha="0" />
+
+            <!-- Email Field -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="אימייל"
+                android:textColor="#e0e0e0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="הכנס כתובת אימייל"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/input_background"
+                android:textColor="#ffffff"
+                android:textColorHint="#66ffffff"
+                android:textSize="16sp"
+                android:padding="18dp"
+                android:layout_marginBottom="20dp"
+                android:maxLength="50"
+                android:layoutDirection="rtl"
+                android:textDirection="rtl" />
+
+            <!-- Password Field -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="סיסמה"
+                android:textColor="#e0e0e0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="הכנס סיסמה"
+                android:inputType="textPassword"
+                android:background="@drawable/input_background"
+                android:textColor="#ffffff"
+                android:textColorHint="#66ffffff"
+                android:textSize="16sp"
+                android:padding="18dp"
+                android:layout_marginBottom="30dp"
+                android:maxLength="40"
+                android:layoutDirection="rtl"
+                android:textDirection="rtl" />
+
+            <!-- Sign Up Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signUpBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="הרשמה"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@drawable/button_background"
+                android:layout_marginTop="20dp" />
+
+
+            <!-- System Message (חשוב! הוסף את זה) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/googleSignInBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/google_button_background"
+                android:drawableLeft="@drawable/ic_google_logo"
+                android:drawablePadding="12dp"
+                android:gravity="center_vertical"
+                android:text="התחבר עם גוגל"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/systemMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#e0e0e0"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:alpha="0.8"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

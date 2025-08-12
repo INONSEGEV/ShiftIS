@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_primary">#0a0a0a</color>
+    <color name="background_secondary">#1a1a1a</color>
+    <color name="card_background">#CC282828</color>
+    <color name="text_primary">#ffffff</color>
+    <color name="text_secondary">#e0e0e0</color>
+    <color name="hint_color">#66ffffff</color>
+    <color name="input_background">#CC3c3c3c</color>
+    <color name="input_border">#1affffff</color>
+    <color name="input_border_focused">#ffffff</color>
+    <color name="button_background">#4a4a4a</color>
+    <color name="button_background_pressed">#5a5a5a</color>
+    <color name="button_text">#ffffff</color>
+    <color name="error_color">#ff6b6b</color>
+    <color name="error_background">#1aff6b6b</color>
+    <color name="background_color">#FFFFFF</color>
+    <color name="text_color">#000000</color>
+
+</resources>
