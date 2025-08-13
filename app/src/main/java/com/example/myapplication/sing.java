@@ -1,9 +1,10 @@
 package com.example.myapplication;
 
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,9 @@ public class sing extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private Button loginButton;
+    private CheckBox rememberMeCheckBox;
     private FirebaseAuth auth;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,16 @@ public class sing extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
+        rememberMeCheckBox = findViewById(R.id.rememberMeCheckBox);
         auth = FirebaseAuth.getInstance();
+        prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+
+        // בדיקה אם המשתמש כבר מחובר
+        if (auth.getCurrentUser() != null && prefs.getBoolean("rememberMe", false)) {
+            startActivity(new Intent(sing.this, MainActivity.class));
+            finish();
+            return;
+        }
 
         loginButton.setOnClickListener(v -> loginUser());
     }
@@ -40,6 +52,9 @@ public class sing extends AppCompatActivity {
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        // שמירת מצב "זכור אותי"
+                        prefs.edit().putBoolean("rememberMe", rememberMeCheckBox.isChecked()).apply();
+
                         Toast.makeText(this, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(sing.this, MainActivity.class));
                         finish();

@@ -106,6 +106,8 @@ public class singUp extends AppCompatActivity {
                 FirebaseUser user = mAuth.getCurrentUser();
                 showSystemMessage("התחברת בהצלחה כ: " + (user != null ? user.getEmail() : "משתמש"));
                 Toast.makeText(this, "התחברת עם גוגל!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, sing.class);
+                startActivity(intent);
                 // ניתן לנווט הלאה מפה לפי הצורך
             } else {
                 showError("שגיאה בהתחברות עם גוגל");

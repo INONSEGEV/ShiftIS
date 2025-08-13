@@ -1,90 +1,91 @@
 package com.example.myapplication;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.content.Intent;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 import android.widget.Toast;
-import android.content.SharedPreferences;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.AuthCredential;
 
 public class MainActivity extends AppCompatActivity {
+
+    private GoogleSignInClient googleSignInClient;
+    private FirebaseAuth firebaseAuth;
+    private ActivityResultLauncher<Intent> googleSignInLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         setContentView(R.layout.activity_main);
 
-        Button myButton = findViewById(R.id.myButton);
-        EditText nameInput = findViewById(R.id.nameInput);
-        TextView txtGreeting = findViewById(R.id.txtGreeting);
+        Button singButton = findViewById(R.id.singButton);
+        Button signUpButton = findViewById(R.id.signUpButton);
+        Button googleSignInBtn = findViewById(R.id.googleSignInBtn);
 
-        myButton.setOnClickListener(v -> {
-            String name = nameInput.getText().toString();
-            if (!name.isEmpty()) {
-                txtGreeting.setText("שלום " + name + "!");
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                intent.putExtra("user_name", name); // שולח את המידע
-                startActivity(intent);
-            } else {
-                txtGreeting.setText("הכנס שם קודם");
-            }
-        });
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        Button btnOpenSecond = findViewById(R.id.btnOpenSecond);
-        btnOpenSecond.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, singUp.class);
-            startActivity(intent);
-        });
+        // הגדרת Google Sign-In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id)) // מה־google-services.json
+                .requestEmail()
+                .build();
 
-        EditText editTextName = findViewById(R.id.nameInput);
-        Button buttonSave = findViewById(R.id.myButton);
-        TextView textViewResult = findViewById(R.id.txtGreeting);
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        try {
-            // יצירת מפתח אבטחה
-            MasterKey masterKey = new MasterKey.Builder(this)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
+        // הגדרת התוצאה מה־Google Sign-In
+        googleSignInLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getData() != null) {
+                        try {
+                            GoogleSignInAccount account = GoogleSignIn.getSignedInAccountFromIntent(result.getData())
+                                    .getResult(ApiException.class);
 
-            // יצירת SharedPreferences מוצפן
-            SharedPreferences prefs = EncryptedSharedPreferences.create(
-                    this,
-                    "SecureData",
-                    masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            );
+                            if (account != null) {
+                                firebaseAuthWithGoogle(account.getIdToken());
+                            }
+                        } catch (ApiException e) {
+                            Toast.makeText(this, "שגיאה בהתחברות: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
-            // טוען נתונים אם קיימים
-            String savedName = prefs.getString("username", null);
-            if (savedName != null) {
-                textViewResult.setText("שם שמור: " + savedName);
-            }
+        singButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, sing.class)));
+        signUpButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, singUp.class)));
 
-            // מאזין ללחיצה על הכפתור
-            buttonSave.setOnClickListener(v -> {
-                String name = editTextName.getText().toString().trim();
-                if (!name.isEmpty()) {
-                    prefs.edit().putString("username", name).apply();
-                    textViewResult.setText("שם שמור: " + name);
-                    Toast.makeText(this, "השם נשמר בצורה מאובטחת!", Toast.LENGTH_SHORT).show();
-                }
-            });
+        googleSignInBtn.setOnClickListener(v -> signInWithGoogle());
+    }
 
-        } catch (GeneralSecurityException | IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "שגיאה בהגדרת ההצפנה", Toast.LENGTH_LONG).show();
-        }
+    private void signInWithGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        googleSignInLauncher.launch(signInIntent);
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "התחברת בהצלחה עם גוגל!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, Loading_page.class)); // דף הבית שלך
+                        finish();
+                    } else {
+                        Toast.makeText(this, "שגיאת התחברות", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
