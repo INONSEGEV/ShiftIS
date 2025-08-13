@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -38,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // הגדרת Google Sign-In
+        // הגדרת Google Sign-In עם כפתור בחירת חשבון חובה
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)) // מה־google-services.json
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -72,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void signInWithGoogle() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
+
+        // כופה בחירת חשבון בכל התחברות
+        signInIntent.putExtra("prompt", "select_account");
+
         googleSignInLauncher.launch(signInIntent);
     }
 
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "התחברת בהצלחה עם גוגל!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, Loading_page.class)); // דף הבית שלך
+                        startActivity(new Intent(MainActivity.this, Loading_page.class));
                         finish();
                     } else {
                         Toast.makeText(this, "שגיאת התחברות", Toast.LENGTH_SHORT).show();

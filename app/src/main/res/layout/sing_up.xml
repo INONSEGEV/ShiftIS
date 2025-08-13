@@ -118,21 +118,7 @@
                 android:layout_marginTop="20dp" />
 
 
-            <!-- System Message (חשוב! הוסף את זה) -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/googleSignInBtn"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/google_button_background"
-                android:drawableLeft="@drawable/ic_google_logo"
-                android:drawablePadding="12dp"
-                android:gravity="center_vertical"
-                android:text="התחבר עם גוגל"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/systemMessage"

@@ -1,0 +1,44 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- מצב מסומן -->
+    <item android:state_checked="true">
+        <layer-list>
+            <item android:right="15dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#ffffff" />
+                    <corners android:radius="6dp" />
+                    <stroke android:width="2dp" android:color="#ffffff" />
+                    <size android:width="20dp" android:height="20dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- מצב לא מסומן -->
+    <item android:state_checked="false">
+        <layer-list>
+            <item android:right="15dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#1affffff" />
+                    <corners android:radius="6dp" />
+                    <stroke android:width="2dp" android:color="#4dffffff" />
+                    <size android:width="20dp" android:height="20dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- מצב לחיצה -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:right="15dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#33ffffff" />
+                    <corners android:radius="6dp" />
+                    <stroke android:width="2dp" android:color="#80ffffff" />
+                    <size android:width="20dp" android:height="20dp" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>

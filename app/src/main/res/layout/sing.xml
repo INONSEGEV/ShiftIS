@@ -111,8 +111,18 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="זכור אותי"
+          android:textStyle="bold"
           android:textColor="#ffffff"
-          android:layout_marginBottom="20dp" />
+          android:textSize="14sp"
+          android:fontFamily="sans-serif"
+          android:layout_marginBottom="20dp"
+          android:padding="8dp"
+          android:button="@drawable/custom_checkbox"
+          android:letterSpacing="0.02"
+          android:paddingStart="20dp"
+          android:background="@drawable/checkbox_background"
+          android:buttonTint="@null"
+          android:theme="@style/CheckBoxTheme" />
 
       <!-- Login Button -->
       <androidx.appcompat.widget.AppCompatButton
@@ -125,6 +135,18 @@
           android:textStyle="bold"
           android:background="@drawable/button_background"
           android:layout_marginTop="10dp" />
+
+      <!-- System Message - הוספה חדשה! -->
+      <TextView
+          android:id="@+id/systemMessage"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textColor="#e0e0e0"
+          android:textSize="14sp"
+          android:gravity="center"
+          android:layout_marginTop="15dp"
+          android:alpha="0.8"
+          android:visibility="gone" />
 
     </LinearLayout>
 

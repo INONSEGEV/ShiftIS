@@ -1,0 +1,4 @@
+<!-- res/drawable/ic_google_logo_inset.xml -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_google_logo"
+    android:insetLeft="25dp" /> <!-- משנה את המיקום של הלוגו ימינה -->
