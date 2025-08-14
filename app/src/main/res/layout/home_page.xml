@@ -15,20 +15,8 @@
         android:layout_marginTop="25dp"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp"/>
+    <include layout="@layout/content_home_page" />
 
-    <!-- TabLayout למעלה, מתחת ל-Toolbar -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabSelectedTextColor="@android:color/white"
-        android:layout_gravity="top"
-        android:layout_marginTop="90dp"
-
-        />
 
 
 

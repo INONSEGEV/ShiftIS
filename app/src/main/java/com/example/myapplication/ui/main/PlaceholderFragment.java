@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.PageOneFragment;
+import com.example.myapplication.Problems;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentPageOneBinding;
 import com.example.myapplication.databinding.FragmentScrollBinding;
@@ -54,9 +55,9 @@ public class PlaceholderFragment extends Fragment {
                         .replace(R.id.fragment_container_view, new invitingFragment())
                         .commit();
             } else {
-                scrollBinding = FragmentScrollBinding.inflate(inflater, container, false);
-                scrollBinding.sectionLabel.setText("תוכן של עמוד " + index);
-                root = scrollBinding.getRoot();
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_view, new Problems())
+                        .commit();
             }
         }
 

@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- הרשאות -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,12 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="29">
+
         <activity
-            android:name=".scrollNP"
-            android:exported="false"
-            android:label="@string/title_activity_scroll_np"
+            android:name=".CameraActivity"
+            android:exported="true"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
+
         <activity
+            android:name=".New_problem"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+
             android:name=".NewProject"
             android:exported="false"
             android:theme="@style/Theme.MyApplication" />
@@ -36,7 +47,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -50,6 +60,18 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication" />
+
+        <!-- FileProvider לשמירת תמונות מהמצלמה -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

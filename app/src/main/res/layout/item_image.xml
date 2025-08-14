@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_margin="4dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@drawable/input_background"
+        app:shapeAppearanceOverlay="@style/RoundedCornersImage" />
+
+    <!-- אופציה 1: כפתור רגיל עם selector -->
+    <ImageButton
+        android:id="@+id/btnDeleteItem"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="2dp"
+        android:background="@drawable/fancy_edittext"
+        android:src="@drawable/ic_close_white"
+        android:contentDescription="מחק תמונה"
+        android:padding="6dp"
+        android:elevation="4dp" />
+
+    <!-- אופציה 2: כפתור עם צל built-in -->
+    <!--
+    <ImageButton
+        android:id="@+id/btnDeleteItem"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="2dp"
+        android:background="@drawable/delete_button_with_shadow"
+        android:src="@drawable/ic_close_white"
+        android:contentDescription="מחק תמונה"
+        android:padding="6dp" />
+    -->
+
+    <!-- אופציה 3: עם MaterialButton לעיצוב מתקדם -->
+    <!--
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDeleteItem"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="2dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:icon="@drawable/ic_close_white"
+        app:iconSize="16dp"
+        app:iconTint="#FFFFFF"
+        app:backgroundTint="#E53E3E"
+        app:cornerRadius="16dp"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="2dp"
+        app:elevation="4dp"
+        android:contentDescription="מחק תמונה" />
+    -->
+
+</FrameLayout>
