@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -25,6 +26,7 @@ public class PageOneFragment extends Fragment {
     private Button btnPickDate, btnSelectImage;
     private EditText checkerEditText, contractorEditText, presentEditText;
     private ImageView imageView;
+    private ImageButton btnDeleteImage;
 
     private ActivityResultLauncher<String> pickImageLauncher;
     private ActivityResultLauncher<Void> captureImageLauncher;
@@ -43,6 +45,7 @@ public class PageOneFragment extends Fragment {
         contractorEditText = root.findViewById(R.id.contractorEditText);
         presentEditText = root.findViewById(R.id.presentEditText);
         imageView = root.findViewById(R.id.imageView);
+        btnDeleteImage = root.findViewById(R.id.btnDeleteImage);
 
         // ActivityResultLauncher לבחירת תמונה מהגלריה
         pickImageLauncher = registerForActivityResult(
@@ -52,6 +55,7 @@ public class PageOneFragment extends Fragment {
                     public void onActivityResult(Uri result) {
                         if (result != null) {
                             imageView.setImageURI(result);
+                            btnDeleteImage.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -64,6 +68,7 @@ public class PageOneFragment extends Fragment {
                     public void onActivityResult(Bitmap result) {
                         if (result != null) {
                             imageView.setImageBitmap(result);
+                            btnDeleteImage.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -71,6 +76,10 @@ public class PageOneFragment extends Fragment {
         // מאזינים לכפתורים
         btnPickDate.setOnClickListener(v -> showDatePicker());
         btnSelectImage.setOnClickListener(v -> showImageOptions());
+        btnDeleteImage.setOnClickListener(v -> {
+            imageView.setImageDrawable(null);
+            btnDeleteImage.setVisibility(View.GONE);
+        });
 
         return root;
     }

@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- צל -->
+    <item
+        android:left="2dp"
+        android:top="2dp">
+        <shape android:shape="oval">
+            <solid android:color="#40000000" />
+        </shape>
+    </item>
+    <!-- הכפתור עצמו -->
+    <item
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="oval">
+            <solid android:color="#E53E3E" />
+            <stroke
+                android:width="2dp"
+                android:color="#FFFFFF" />
+        </shape>
+    </item>
+</layer-list>
