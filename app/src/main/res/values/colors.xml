@@ -18,4 +18,25 @@
     <color name="text_color">#000000</color>
 
 
+
+    <color name="new_document_icon_tint">#FF4CAF50</color>
+
+    <color name="background_primary1">#FF0A0A0A</color>
+    <color name="background_secondary1">#FF1A1A1A</color>
+    <color name="background_tertiary">#FF2A2A2A</color>
+
+    <!-- צבעי טקסט -->
+    <color name="text_secondary1">#FFE0E0E0</color>
+    <color name="text_hint">#66FFFFFF</color>
+
+    <!-- צבעי מניו -->
+    <color name="menu_background">#FF282828</color>
+    <color name="menu_background_pressed">#FF3A3A3A</color>
+    <color name="menu_icon_tint">#FFE0E0E0</color>
+    <color name="logout_icon_tint">#FFFF6B6B</color>
+
+    <!-- צבעי הדגשה -->
+    <color name="accent_primary">#FFFFFFFF</color>
+    <color name="accent_secondary">#66FFFFFF</color>
+
 </resources>

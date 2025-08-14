@@ -35,7 +35,7 @@ public class Loading_page extends AppCompatActivity {
             Intent intent;
             if (currentUser != null) {
                 // המשתמש כבר מחובר → מעבר ל־HomeActivity
-                intent = new Intent(Loading_page.this, Home.class);
+                intent = new Intent(Loading_page.this, HomePage.class);
             } else {
                 // המשתמש לא מחובר → מעבר למסך התחברות/הרשמה
                 intent = new Intent(Loading_page.this, MainActivity.class);

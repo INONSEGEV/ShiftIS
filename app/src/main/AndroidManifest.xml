@@ -14,11 +14,23 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="29">
         <activity
-            android:name=".Up"
-            android:exported="false" />
+            android:name=".scrollNP"
+            android:exported="false"
+            android:label="@string/title_activity_scroll_np"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".Home"
-            android:exported="false" />
+            android:name=".NewProject"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".scroll"
+            android:exported="true"
+            android:label="@string/title_activity_scroll"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".HomePage"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".Loading_page"
             android:exported="true">
@@ -34,11 +46,6 @@
         <activity
             android:name=".singUp"
             android:exported="true" />
-        <activity
-            android:name=".SecondActivity"
-            android:exported="false"
-            android:label="@string/title_activity_second"
-            android:theme="@style/Theme.MyApplication" />
         <activity
             android:name=".MainActivity"
             android:exported="false"

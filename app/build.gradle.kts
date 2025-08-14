@@ -17,6 +17,7 @@ android {
         versionCode = 2
         versionName = "1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
 
@@ -37,9 +38,11 @@ android {
         viewBinding = true
         compose = true
     }
+
 }
 
 dependencies {
+
 
     implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
     implementation("com.google.firebase:firebase-analytics")
@@ -69,5 +72,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-auth:24.0.1")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
 
 }

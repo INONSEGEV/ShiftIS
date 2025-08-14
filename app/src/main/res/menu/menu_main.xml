@@ -1,10 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- main_menu.xml -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.myapplication.MainActivity">
+    tools:context=".HomePage">
+
+    <!-- פריט הגדרות עם אייקון מותאם -->
     <item
         android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_modern"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="הגדרות"
+        android:titleCondensed="הגדרות"
+        app:showAsAction="ifRoom|withText"
+        app:iconTint="@color/menu_icon_tint"
+        app:actionViewClass="androidx.appcompat.widget.ActionMenuView" />
+
+    <!-- פריט התנתקות עם אייקון מותאם -->
+    <item
+        android:id="@+id/logoutButton"
+        android:icon="@drawable/ic_logout_modern"
+        android:orderInCategory="200"
+        android:title="התנתק"
+        android:titleCondensed="התנתק"
+        app:showAsAction="ifRoom|withText"
+        app:iconTint="@color/logout_icon_tint" />
+    <item
+        android:id="@+id/NewProject"
+        android:icon="@drawable/ic_add_document_modern"
+        android:orderInCategory="50"
+        android:title="מסמך חדש"
+        android:titleCondensed="חדש"
+        app:showAsAction="ifRoom|withText"
+        app:iconTint="@color/accent_primary" />
+
+
 </menu>
