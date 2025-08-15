@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button singButton = findViewById(R.id.singButton);
         Button signUpButton = findViewById(R.id.signUpButton);
-        Button googleSignInBtn = findViewById(R.id.googleSignInBtn);
+        LinearLayout googleSignInBtn = findViewById(R.id.googleSignInBtn); // LinearLayout במקום Button
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         singButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, sing.class)));
         signUpButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, singUp.class)));
 
+        // לחיצה על ה-LinearLayout של Google Sign-In
         googleSignInBtn.setOnClickListener(v -> signInWithGoogle());
     }
 
@@ -90,5 +92,10 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, "שגיאת התחברות", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    // ניתן גם לשים את זה אם רצית לקרוא דרך android:onClick ב-XML
+    public void onGoogleSignInClicked(android.view.View view) {
+        signInWithGoogle();
     }
 }

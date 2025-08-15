@@ -1,5 +1,9 @@
 package com.example.myapplication;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -13,6 +17,7 @@ import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -25,25 +30,61 @@ import java.util.concurrent.ExecutionException;
 public class CameraActivity extends AppCompatActivity {
 
     public static final int CAPTURE_IMAGE_REQUEST = 101;
+    private static final int CAMERA_PERMISSION_REQUEST = 100;
+    private static final String PREFS_NAME = "camera_prefs";
+    private static final String PREF_DENIED_BEFORE = "denied_before";
 
     private PreviewView previewView;
     private ImageButton btnCapture, btnDone;
     private ImageCapture imageCapture;
     private List<Uri> capturedUris = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera); // XML שהכנת
+        setContentView(R.layout.activity_camera);
 
         previewView = findViewById(R.id.previewView);
         btnCapture = findViewById(R.id.btnCapture);
         btnDone = findViewById(R.id.btnDone);
 
-        startCamera();
+        sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        checkCameraPermission();
 
         btnCapture.setOnClickListener(v -> takePhoto());
         btnDone.setOnClickListener(v -> finishWithResult());
+    }
+
+    private void checkCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+            startCamera();
+        } else {
+            boolean deniedBefore = sharedPreferences.getBoolean(PREF_DENIED_BEFORE, false);
+            if (deniedBefore) {
+                Toast.makeText(this, "נא לאשר הרשאת מצלמה כדי להשתמש באפליקציה", Toast.LENGTH_LONG).show();
+            }
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_PERMISSION_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startCamera();
+            } else {
+                sharedPreferences.edit().putBoolean(PREF_DENIED_BEFORE, true).apply();
+                Toast.makeText(this, "הרשאת מצלמה נדחתה", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void startCamera() {
@@ -52,10 +93,17 @@ public class CameraActivity extends AppCompatActivity {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
 
-                Preview preview = new Preview.Builder().build();
+                // Preview
+                Preview preview = new Preview.Builder()
+                        .setTargetRotation(previewView.getDisplay().getRotation())
+                        .build();
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-                imageCapture = new ImageCapture.Builder().build();
+                // ImageCapture
+                imageCapture = new ImageCapture.Builder()
+                        .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                        .setTargetRotation(previewView.getDisplay().getRotation())
+                        .build();
 
                 CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
 
