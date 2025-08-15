@@ -1,18 +1,30 @@
 package com.example.myapplication;
 
-import android.net.Uri;
-import java.util.List;
+import java.io.Serializable;
 
-public class ProblemItem {
+public class ProblemItem implements Serializable {
     private String title;
     private String topic;
     private String subTopic;
     private String description;
     private String remark;
-    private List<Uri> images;
+    private String date;         // שדה תאריך
+    private boolean expanded;    // מצב פתיחה/סגירה של השורה
 
+    // בנאי עם כותרת בלבד
     public ProblemItem(String title) {
         this.title = title;
+    }
+
+    // בנאי מלא
+    public ProblemItem(String title, String topic, String subTopic, String description, String remark, String date) {
+        this.title = title;
+        this.topic = topic;
+        this.subTopic = subTopic;
+        this.description = description;
+        this.remark = remark;
+        this.date = date;
+        this.expanded = false;
     }
 
     // getters & setters
@@ -31,6 +43,9 @@ public class ProblemItem {
     public String getRemark() { return remark; }
     public void setRemark(String remark) { this.remark = remark; }
 
-    public List<Uri> getImages() { return images; }
-    public void setImages(List<Uri> images) { this.images = images; }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
+
+    public boolean isExpanded() { return expanded; }
+    public void setExpanded(boolean expanded) { this.expanded = expanded; }
 }

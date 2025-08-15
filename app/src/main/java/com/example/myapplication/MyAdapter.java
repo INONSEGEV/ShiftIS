@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,15 +32,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProblemItem item = itemList.get(position);
 
-        // מציג את כל השדות בטקסטView בצורה מאוחדת
-        String combined = item.getTitle();
-        if (item.getTopic() != null) combined += " | " + item.getTopic();
-        if (item.getSubTopic() != null) combined += " | " + item.getSubTopic();
-        if (item.getDescription() != null) combined += " | " + item.getDescription();
-        if (item.getRemark() != null) combined += " | " + item.getRemark();
+        // הכותרת הראשית
+        holder.textView.setText(item.getTitle());
 
-        holder.textView.setText(combined);
+        // פרטים נוספים
+        holder.subTopicText.setText("תת-נושא: " + (item.getSubTopic() != null ? item.getSubTopic() : ""));
+        holder.descriptionText.setText("תיאור: " + (item.getDescription() != null ? item.getDescription() : ""));
+        holder.remarkText.setText("הערה: " + (item.getRemark() != null ? item.getRemark() : ""));
+        holder.dateText.setText("תאריך: " + (item.getDate() != null ? item.getDate() : ""));
 
+        // מצב ראשוני של פרטי השורה
+        holder.detailsLayout.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
+
+        // לחיצה על השורה הראשית כדי לפתוח/לסגור את הפרטים
+        holder.textView.setOnClickListener(v -> {
+            item.setExpanded(!item.isExpanded());
+            notifyItemChanged(position);
+        });
+
+        // כפתור מחיקה
         holder.deleteButton.setOnClickListener(v -> {
             itemList.remove(position);
             notifyItemRemoved(position);
@@ -53,13 +64,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView textView, subTopicText, descriptionText, remarkText, dateText;
         ImageButton deleteButton;
+        LinearLayout detailsLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textView);
             deleteButton = itemView.findViewById(R.id.deleteButton);
+            detailsLayout = itemView.findViewById(R.id.detailsLayout);
+            subTopicText = itemView.findViewById(R.id.subTopicText);
+            descriptionText = itemView.findViewById(R.id.descriptionText);
+            remarkText = itemView.findViewById(R.id.remarkText);
+            dateText = itemView.findViewById(R.id.dateText);
         }
     }
 }

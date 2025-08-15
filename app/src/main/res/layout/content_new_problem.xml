@@ -35,21 +35,7 @@
                     android:gravity="center"
                     android:layout_marginBottom="20dp"/>
 
-                <!-- EditText לכותרת הבעיה -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="כותרת"
-                    android:textColor="#e0e0e0"
-                    android:textStyle="bold"/>
-                <EditText
-                    android:id="@+id/etTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/input_background"
-                    android:textColor="#ffffff"
-                    android:padding="12dp"
-                    android:layout_marginBottom="12dp"/>
+
 
                 <!-- שדות קיימים -->
                 <TextView

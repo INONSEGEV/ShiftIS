@@ -2,56 +2,36 @@ package com.example.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.myapplication.databinding.ActivityNewProblemBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class New_problem extends AppCompatActivity {
 
-    private ActivityNewProblemBinding binding;
-    private List<Uri> imageUris = new ArrayList<>();
-    private ImagesAdapter imagesAdapter;
-
-    private static final int PICK_IMAGES_REQUEST = 100;
-    private static final int CAMERA_REQUEST = 101;
+    private EditText carrierEditText, subTopicEditText, descriptionEditText, remarkEditText;
+    private Button btnPickDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityNewProblemBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_new_problem);
 
-        setSupportActionBar(binding.toolbar);
-
-        imagesAdapter = new ImagesAdapter(imageUris);
-        binding.contentMain.recyclerViewImages.setLayoutManager(
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        binding.contentMain.recyclerViewImages.setAdapter(imagesAdapter);
-
-        updateRecyclerVisibility();
-
-        // כפתור בחירת תמונות מהגלריה
-        binding.contentMain.btnSelectImage.setOnClickListener(v -> pickImagesFromGallery());
-
-        // כפתור צילום – פותח CameraActivity
-        binding.contentMain.btnCaptureImage.setOnClickListener(v -> {
-            Intent intent = new Intent(New_problem.this, CameraActivity.class);
-            startActivityForResult(intent, CAMERA_REQUEST);
-        });
+        carrierEditText = findViewById(R.id.carrierEditText);
+        subTopicEditText = findViewById(R.id.SubTopicEditText);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+        remarkEditText = findViewById(R.id.remarkEditText);
+        btnPickDate = findViewById(R.id.btnPickDate);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         // בחירת תאריך
-        binding.contentMain.btnPickDate.setOnClickListener(v -> {
+        btnPickDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
@@ -61,47 +41,33 @@ public class New_problem extends AppCompatActivity {
                     (view, year1, month1, dayOfMonth) -> {
                         String selectedDate = String.format("%02d/%02d/%04d",
                                 dayOfMonth, month1 + 1, year1);
-                        binding.contentMain.btnPickDate.setText(selectedDate);
+                        btnPickDate.setText(selectedDate);
                     }, year, month, day);
             datePickerDialog.show();
         });
-    }
 
-    private void updateRecyclerVisibility() {
-        binding.contentMain.recyclerViewImages.setVisibility(imageUris.isEmpty() ? View.GONE : View.VISIBLE);
-    }
+        fab.setOnClickListener(v -> {
+            String carrier = carrierEditText.getText().toString();
+            String subTopic = subTopicEditText.getText().toString();
+            String description = descriptionEditText.getText().toString();
+            String remark = remarkEditText.getText().toString();
+            String date = btnPickDate.getText().toString();
 
-    private void pickImagesFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "בחר תמונות"), PICK_IMAGES_REQUEST);
-    }
+            ProblemItem item = new ProblemItem(
+                    carrier,       // title
+                    "",            // topic (ריק אם אין כרגע)
+                    subTopic,      // subTopic
+                    description,   // description
+                    remark,        // remark
+                    date           // date
+            );
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("ProblemItem", item); // שם key חייב להיות זהה ב-Fragment
+            setResult(RESULT_OK, resultIntent);
+            finish();
 
-        if (resultCode != RESULT_OK || data == null) return;
-
-        if (requestCode == PICK_IMAGES_REQUEST) {
-            if (data.getClipData() != null) {
-                int count = data.getClipData().getItemCount();
-                for (int i = 0; i < count && imageUris.size() < 20; i++) {
-                    imageUris.add(data.getClipData().getItemAt(i).getUri());
-                }
-            } else if (data.getData() != null) {
-                imageUris.add(data.getData());
-            }
-        } else if (requestCode == CAMERA_REQUEST) {
-            ArrayList<Uri> capturedImages = data.getParcelableArrayListExtra("capturedImages");
-            if (capturedImages != null) {
-                imageUris.addAll(capturedImages);
-            }
-        }
-
-        imagesAdapter.notifyDataSetChanged();
-        updateRecyclerVisibility();
+            Toast.makeText(New_problem.this, "נוסף פריט חדש!", Toast.LENGTH_SHORT).show();
+        });
     }
 }

@@ -10,6 +10,7 @@
     android:gravity="center_vertical"
     android:elevation="2dp">
 
+    <!-- שורה ראשית עם כותרת וכפתור מחיקה -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -36,6 +37,44 @@
             android:contentDescription="Delete"
             android:scaleType="centerInside"
             style="?android:attr/borderlessButtonStyle" />
+    </LinearLayout>
+
+    <!-- פרטים נוספים - מוסתרים כברירת מחדל -->
+    <LinearLayout
+        android:id="@+id/detailsLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/subTopicText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="תת-נושא" />
+
+        <TextView
+            android:id="@+id/descriptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="תיאור" />
+
+        <TextView
+            android:id="@+id/remarkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="הערה" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="תאריך" />
     </LinearLayout>
 
 </LinearLayout>

@@ -22,8 +22,6 @@ public class Problems extends Fragment {
 
     private List<ProblemItem> itemList;
     private MyAdapter adapter;
-    private int lastIndex = -1;
-
     private ActivityResultLauncher<Intent> launcher;
 
     @Nullable
@@ -40,30 +38,23 @@ public class Problems extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
+        // Launcher לקבלת ProblemItem מ-New_problem
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
-                        Intent data = result.getData();
-                        ProblemItem item = itemList.get(lastIndex);
-                        item.setTitle(data.getStringExtra("title"));
-                        item.setTopic(data.getStringExtra("topic"));
-                        item.setSubTopic(data.getStringExtra("subTopic"));
-                        item.setDescription(data.getStringExtra("description"));
-                        item.setRemark(data.getStringExtra("remark"));
-                        // תמונות אפשר להוסיף אם רוצים
-                        adapter.notifyItemChanged(lastIndex);
+                        ProblemItem item = (ProblemItem) result.getData().getSerializableExtra("ProblemItem");
+                        if (item != null) {
+                            itemList.add(item);
+                            adapter.notifyItemInserted(itemList.size() - 1);
+                            recyclerView.scrollToPosition(itemList.size() - 1);
+                        }
                     }
                 }
         );
 
         Button addButton = view.findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> {
-            itemList.add(new ProblemItem("New"));
-            lastIndex = itemList.size() - 1;
-            adapter.notifyItemInserted(lastIndex);
-            recyclerView.scrollToPosition(lastIndex);
-
             Intent intent = new Intent(getActivity(), New_problem.class);
             launcher.launch(intent);
         });
