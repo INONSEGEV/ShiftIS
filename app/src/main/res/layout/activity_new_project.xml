@@ -16,7 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/gradient_background"
             app:title="הבית"
-            app:titleTextColor="@android:color/white"/>
+            app:titleTextColor="@android:color/white" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

@@ -35,15 +35,15 @@
                     android:gravity="center"
                     android:layout_marginBottom="20dp"/>
 
-                <!-- שדות קיימים -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="נושא"
+                    android:text="מספר תקן"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
-                    android:id="@+id/carrierEditText"
+                    android:id="@+id/standardEditText"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:background="@drawable/input_background"
@@ -51,79 +51,7 @@
                     android:padding="12dp"
                     android:layout_marginBottom="12dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="תת נושא"
-                    android:textColor="#e0e0e0"
-                    android:textStyle="bold"/>
-                <EditText
-                    android:id="@+id/SubTopicEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/input_background"
-                    android:textColor="#ffffff"
-                    android:padding="12dp"
-                    android:layout_marginBottom="12dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="תאור"
-                    android:textColor="#e0e0e0"
-                    android:textStyle="bold"/>
-                <EditText
-                    android:id="@+id/descriptionEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:background="@drawable/input_background"
-                    android:textColor="#ffffff"
-                    android:padding="12dp"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="הערה"
-                    android:textColor="#e0e0e0"
-                    android:textStyle="bold"/>
-
-                <EditText
-                    android:id="@+id/remarkEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/input_background"
-                    android:padding="12dp"
-                    android:textColor="#ffffff" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnStandardItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:text="הוספת ניגוד תקן"
-                    android:background="@drawable/button_background"
-                    android:textColor="#ffffff"
-                    android:layout_marginBottom="12dp"/>
-
-                <!-- RecyclerView סטנדרטים עם גלילה אופקית פנימית -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewStandard"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:scrollbars="vertical"
-                    android:clipToPadding="false"
-                    android:padding="4dp"/>
-
-                <!-- כפתור בחירת תאריך -->
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnPickDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:text="בחר תאריך"
-                    android:background="@drawable/button_background"
-                    android:textColor="#ffffff"
-                    android:layout_marginBottom="12dp"/>
 
                 <!-- כפתורי בחירת/צילום תמונות -->
                 <LinearLayout
@@ -163,6 +91,17 @@
                     android:clipToPadding="false"
                     android:padding="4dp"/>
             </LinearLayout>
+
+
         </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="שמור"
+            android:background="@drawable/button_background"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="12dp"/>
     </LinearLayout>
 </ScrollView>

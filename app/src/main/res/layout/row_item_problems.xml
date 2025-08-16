@@ -37,6 +37,16 @@
             android:contentDescription="Delete"
             android:scaleType="centerInside"
             style="?android:attr/borderlessButtonStyle" />
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/edit_button_background"
+            android:src="@drawable/ic_edit"
+            android:contentDescription="Edit"
+            android:scaleType="centerInside"
+            style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
 
     <!-- פרטים נוספים - מוסתרים כברירת מחדל -->
@@ -78,3 +88,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

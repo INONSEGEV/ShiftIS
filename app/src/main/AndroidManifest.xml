@@ -19,6 +19,17 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="29">
 
+
+        <activity
+            android:name=".AddStandard"
+            android:exported="false">
+    </activity>
+        <activity
+            android:name=".EditStandard"
+            android:exported="false">
+    </activity>
+        <!-- You might have intent filters here depending on how you start this activity -->
+
         <activity
             android:name=".CameraActivity"
             android:exported="true"

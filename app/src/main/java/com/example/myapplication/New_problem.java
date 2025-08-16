@@ -3,12 +3,14 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +23,19 @@ import java.util.Calendar;
 public class New_problem extends AppCompatActivity {
 
     private EditText carrierEditText, subTopicEditText, descriptionEditText, remarkEditText;
-    private Button btnPickDate, btnPickFromGallery, btnOpenCamera;
+    private Button btnStandardItem, btnPickDate, btnPickFromGallery, btnOpenCamera;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private ImagesAdapter imagesAdapter;
 
+    private RecyclerView recyclerViewStandard, recyclerViewImages;
+    private standardAdapter adapter;
+    private ArrayList<standardItem> items;
+
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
+
+    private static final int ADD_ITEM_REQUEST = 1;
+    private static final int EDIT_ITEM_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +50,47 @@ public class New_problem extends AppCompatActivity {
         btnPickDate = findViewById(R.id.btnPickDate);
         btnPickFromGallery = findViewById(R.id.btnSelectImage);
         btnOpenCamera = findViewById(R.id.btnCaptureImage);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        btnStandardItem = findViewById(R.id.btnStandardItem);
+        recyclerViewStandard = findViewById(R.id.recyclerViewStandard);
+        recyclerViewImages = findViewById(R.id.recyclerViewImages);
 
-        // RecyclerView
-        RecyclerView recyclerViewImages = findViewById(R.id.recyclerViewImages);
+        // ------------------------
+        // RecyclerView סטנדרטים
+        // ------------------------
+        items = new ArrayList<>();
+        adapter = new standardAdapter(this, items);
+        recyclerViewStandard.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewStandard.setAdapter(adapter);
+        updateRecyclerViewVisibility();
+
+        btnStandardItem.setOnClickListener(v -> {
+            Intent intent = new Intent(New_problem.this, AddStandard.class);
+            startActivityForResult(intent, ADD_ITEM_REQUEST);
+        });
+
+        // ------------------------
+        // RecyclerView תמונות
+        // ------------------------
         imagesAdapter = new ImagesAdapter(this, selectedImages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewImages.setLayoutManager(layoutManager);
         recyclerViewImages.setAdapter(imagesAdapter);
+        updateRecyclerViewImagesVisibility();
+
+        btnPickFromGallery.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            galleryLauncher.launch(intent);
+        });
+
+        btnOpenCamera.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CameraActivity.class);
+            cameraLauncher.launch(intent);
+        });
 
         // ------------------------
-        //  Date picker
+        // Date picker
         // ------------------------
         btnPickDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -68,7 +107,7 @@ public class New_problem extends AppCompatActivity {
         });
 
         // ------------------------
-        //  ActivityResultLaunchers
+        // ActivityResultLaunchers
         // ------------------------
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -79,11 +118,13 @@ public class New_problem extends AppCompatActivity {
                             for (int i = 0; i < count; i++) {
                                 Uri imageUri = result.getData().getClipData().getItemAt(i).getUri();
                                 selectedImages.add(imageUri);
+                                imagesAdapter.notifyItemInserted(selectedImages.size() - 1);
                             }
                         } else if (result.getData().getData() != null) {
                             selectedImages.add(result.getData().getData());
+                            imagesAdapter.notifyItemInserted(selectedImages.size() - 1);
                         }
-                        imagesAdapter.notifyDataSetChanged();
+                        updateRecyclerViewImagesVisibility();
                         Toast.makeText(this, selectedImages.size() + " תמונות נבחרו", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -95,55 +136,65 @@ public class New_problem extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         ArrayList<Uri> cameraImages = result.getData().getParcelableArrayListExtra("capturedImages");
                         if (cameraImages != null) {
+                            int startIndex = selectedImages.size();
                             selectedImages.addAll(cameraImages);
-                            imagesAdapter.notifyDataSetChanged();
+                            imagesAdapter.notifyItemRangeInserted(startIndex, cameraImages.size());
+                            updateRecyclerViewImagesVisibility();
                             Toast.makeText(this, cameraImages.size() + " תמונות צולמו", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
+    }
 
-        // ------------------------
-        //  Button listeners
-        // ------------------------
-        btnPickFromGallery.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            galleryLauncher.launch(intent);
-        });
+    // ------------------------
+    // טיפול ב-ActivityResult
+    // ------------------------
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        btnOpenCamera.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CameraActivity.class);
-            cameraLauncher.launch(intent);
-        });
+        if (resultCode != RESULT_OK || data == null) return;
 
-        // ------------------------
-        //  FAB - שמירת הפריט
-        // ------------------------
-        fab.setOnClickListener(v -> {
-            String carrier = carrierEditText.getText().toString();
-            String subTopic = subTopicEditText.getText().toString();
-            String description = descriptionEditText.getText().toString();
-            String remark = remarkEditText.getText().toString();
-            String date = btnPickDate.getText().toString();
+        // הוספת פריט חדש
+        if (requestCode == ADD_ITEM_REQUEST) {
+            String standard  = data.getStringExtra("standard");
+            standardItem newItem = new standardItem(standard);
+            items.add(newItem);
+            adapter.notifyItemInserted(items.size() - 1);
+            updateRecyclerViewVisibility();
+        }
 
-            ProblemItem item = new ProblemItem(
-                    carrier,
-                    "",        // topic
-                    subTopic,
-                    description,
-                    remark,
-                    date
-            );
+        // עריכת פריט קיים
+        if (requestCode == EDIT_ITEM_REQUEST) {
+            int position = data.getIntExtra("position", -1);
+            String standard = data.getStringExtra("standard");
 
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("ProblemItem", item);
-            resultIntent.putParcelableArrayListExtra("selectedImages", selectedImages);
-            setResult(RESULT_OK, resultIntent);
-            finish();
+            if (position != -1) {
+                standardItem updatedItem = items.get(position);
+                updatedItem.setStandard(standard);
+                adapter.notifyItemChanged(position);
+                updateRecyclerViewVisibility();
+            }
+        }
+    }
 
-            Toast.makeText(New_problem.this, "נוסף פריט חדש!", Toast.LENGTH_SHORT).show();
-        });
+    // ------------------------
+    // פונקציות עזר: הסתרה/הצגה של Recyclerview
+    // ------------------------
+    public void updateRecyclerViewVisibility() {
+        if (adapter.getItemCount() == 0) {
+            recyclerViewStandard.setVisibility(View.GONE);
+        } else {
+            recyclerViewStandard.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void updateRecyclerViewImagesVisibility() {
+        if (imagesAdapter.getItemCount() == 0) {
+            recyclerViewImages.setVisibility(View.GONE);
+        } else {
+            recyclerViewImages.setVisibility(View.VISIBLE);
+        }
     }
 }
