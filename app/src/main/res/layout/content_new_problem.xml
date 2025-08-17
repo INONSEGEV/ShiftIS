@@ -178,10 +178,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewImages"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="280dp"
                     android:scrollbars="horizontal"
                     android:clipToPadding="false"
-                    android:padding="4dp"/>
+                    android:padding="8dp"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

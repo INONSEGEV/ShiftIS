@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -68,6 +69,19 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
                 }
             }
         });
+
+        // כפתור עריכה
+        holder.btnEdit.setOnClickListener(v -> {
+            Intent editIntent = new Intent(Intent.ACTION_EDIT);
+            editIntent.setDataAndType(imageUri, "image/*");
+            editIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                context.startActivity(Intent.createChooser(editIntent, "ערוך תמונה"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                // אפשר להוסיף Toast אם אין אפליקציית עריכה מותקנת
+            }
+        });
     }
 
     @Override
@@ -78,11 +92,13 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         ImageButton btnDelete;
+        ImageButton btnEdit;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageItem);
             btnDelete = itemView.findViewById(R.id.btnDeleteItem);
+            btnEdit = itemView.findViewById(R.id.btnEditItem); // מחובר לכפתור עריכה ב-XML
         }
     }
 }
