@@ -7,11 +7,6 @@
     android:background="@drawable/gradient_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="# ==== Java ====&#xA;Write-Output &quot;=== Java Files Detailed Report ===&quot;&#xA;$javaFiles = Get-ChildItem -Recurse -Include *.java | Where-Object { $_.FullName -notmatch &quot;build|\.gradle&quot; }&#xA;$javaTotalLines = 0&#xA;&#xA;foreach ($file in $javaFiles) {&#xA;    $lines = (Get-Content $file.FullName | Measure-Object -Line).Lines&#xA;    $javaTotalLines += $lines&#xA;    Write-Output ($file.FullName + &quot; : &quot; + $lines + &quot; lines&quot;)&#xA;}&#xA;&#xA;Write-Output (&quot;Java files count: &quot; + $javaFiles.Count)&#xA;Write-Output (&quot;Java total lines: &quot; + $javaTotalLines)&#xA;&#xA;# ==== XML ====&#xA;Write-Output &quot;`n=== XML Files Detailed Report ===&quot;&#xA;$xmlFiles = Get-ChildItem -Recurse -Include *.xml | Where-Object { $_.FullName -notmatch &quot;build|\.gradle&quot; }&#xA;$xmlTotalLines = 0&#xA;&#xA;foreach ($file in $xmlFiles) {&#xA;    $lines = (Get-Content $file.FullName | Measure-Object -Line).Lines&#xA;    $xmlTotalLines += $lines&#xA;    Write-Output ($file.FullName + &quot; : &quot; + $lines + &quot; lines&quot;)&#xA;}&#xA;&#xA;Write-Output (&quot;XML files count: &quot; + $xmlFiles.Count)&#xA;Write-Output (&quot;XML total lines: &quot; + $xmlTotalLines)&#xA;&#xA;# ==== Total Summary ====&#xA;Write-Output &quot;`n=== Total Summary ===&quot;&#xA;$totalFiles = $javaFiles.Count + $xmlFiles.Count&#xA;$totalLines = $javaTotalLines + $xmlTotalLines&#xA;Write-Output (&quot;Total files: &quot; + $totalFiles)&#xA;Write-Output (&quot;Total lines: &quot; + $totalLines)&#xA;" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

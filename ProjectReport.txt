@@ -1,0 +1,205 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250817023330
+Username: DESKTOP-DPM36VM\Nesy
+RunAs User: DESKTOP-DPM36VM\Nesy
+Configuration Name: 
+Machine: DESKTOP-DPM36VM (Microsoft Windows NT 10.0.19045.0)
+Host Application: powershell.exe -NoExit -ExecutionPolicy Bypass -File C:\Program Files\Android\Android Studio\plugins\terminal\shell-integrations\powershell\powershell-integration.ps1
+Process ID: 23320
+PSVersion: 5.1.19041.6216
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6216
+BuildVersion: 10.0.19041.6216
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Users\Nesy\AndroidStudioProjects\MyApplication2\ProjectReport.txt
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> # ==== Java ====
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output "=== Java Files Detailed Report ==="
+=== Java Files Detailed Report ===
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $javaFiles = Get-ChildItem -Recurse -Include *.java | Where-Object { $_.FullName -notmatch "build|\.gradle" }
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $javaTotalLines = 0
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> foreach ($file in $javaFiles) {
+    $lines = (Get-Content $file.FullName | Measure-Object -Line).Lines
+    $javaTotalLines += $lines
+    Write-Output ($file.FullName + " : " + $lines + " lines")
+}
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\androidTest\java\com\example\myapplication\ExampleInstrumentedTest.java : 21 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\ui\main\PageViewModel.java : 16 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\ui\main\PlaceholderFragment.java : 89 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\ui\main\SectionsPagerAdapter.java : 30 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\AddStandard.java : 24 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\CameraActivity.java : 128 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\EditStandard.java : 29 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\First2Fragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\First3Fragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\FirstFragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\HomePage.java : 56 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\ImagesAdapter.java : 56 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\invitingFragment.java : 27 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\Loading_page.java : 38 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\MainActivity.java : 82 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\MyAdapter.java : 66 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\NewProject.java : 113 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\New_problem.java : 173 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\PageOneFragment.java : 93 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\ProblemItem.java : 40 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\Problems.java : 52 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\scroll.java : 28 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\Second2Fragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\Second3Fragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\SecondFragment.java : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\sing.java : 159 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\singUp.java : 157 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\standard.java : 3 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\standardAdapter.java : 76 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\java\com\example\myapplication\standardItem.java : 13 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\test\java\com\example\myapplication\ExampleUnitTest.java : 14 lines
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("Java files count: " + $javaFiles.Count)
+Java files count: 31
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("Java total lines: " + $javaTotalLines)
+Java total lines: 1775
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> # ==== XML ====
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output "`n=== XML Files Detailed Report ==="
+
+=== XML Files Detailed Report ===
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $xmlFiles = Get-ChildItem -Recurse -Include *.xml | Where-Object { $_.FullName -notmatch "build|\.gradle" }
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $xmlTotalLines = 0
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> foreach ($file in $xmlFiles) {
+    $lines = (Get-Content $file.FullName | Measure-Object -Line).Lines
+    $xmlTotalLines += $lines
+    Write-Output ($file.FullName + " : " + $lines + " lines")
+}
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\caches\deviceStreaming.xml : 835 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\AndroidProjectSystem.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\assetWizardSettings.xml : 296 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\compiler.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\deploymentTargetSelector.xml : 44 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\deviceManager.xml : 13 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\gradle.xml : 19 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\migrations.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\misc.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\navEditor.xml : 141 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\render.experimental.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\runConfigurations.xml : 17 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\vcs.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\.idea\workspace.xml : 1298 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\animator\button_elevation.xml : 21 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\actionbar_gradient.xml : 11 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\animated_circle.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\button_background.xml : 23 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\center_dot.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\checkbox_background.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\checkbox_ripple_effect.xml : 9 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\circle_red_background.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\custom_checkbox.xml : 41 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\delete_button_background.xml : 13 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\delete_button_selector.xml : 18 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\delete_button_with_shadow.xml : 21 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\diamond_vector.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\edit_button_background.xml : 13 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\error_background.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\fancy_button.xml : 27 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\fancy_edittext.xml : 20 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\google_button_background.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\gradient_background.xml : 8 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\horizontal_line.xml : 4 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_add_document_modern.xml : 14 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_close_white.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_delete.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_edit.xml : 9 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_google_logo_inset.xml : 4 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_launcher_background.xml : 74 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_logout_modern.xml : 11 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\ic_settings_modern.xml : 11 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\input_background.xml : 17 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\item_background.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\logo_glassmorphism_effect.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\menu_item_selector.xml : 21 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\orbit_dot.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\orbit_ring.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\orbit_ring_light.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\particle_circle.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\popup_menu_background.xml : 16 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\separator_line.xml : 9 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\small_circle.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\styles.xml : 3 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\textview_bg.xml : 16 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable\triangle_vector.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\drawable-v24\ic_launcher_foreground.xml : 30 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_camera.xml : 33 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_loading_page.xml : 214 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_main.xml : 72 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_new_problem.xml : 29 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_new_project.xml : 43 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\activity_scroll.xml : 34 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\add_standard.xml : 92 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\content_home_page.xml : 19 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\content_main.xml : 18 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\content_new_problem.xml : 152 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\content_new_project.xml : 173 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\content_second.xml : 18 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\edit_standard.xml : 92 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_add_problems.xml : 18 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_container.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_first.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_first2.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_first3.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_inviting.xml : 305 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_page_one.xml : 183 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_scroll.xml : 15 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_second.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_second2.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\fragment_second3.xml : 32 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\home_page.xml : 18 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\item_image.xml : 59 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\master_layout.xml : 66 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\row_item_problems.xml : 80 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\sing.xml : 141 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\layout\sing_up.xml : 122 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\menu\menu_main.xml : 34 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml : 5 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\navigation\nav_graph.xml : 17 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\navigation\nav_graph2.xml : 25 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\navigation\nav_graph3.xml : 25 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\navigation\nav_graph4.xml : 25 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values\colors.xml : 34 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values\dimens.xml : 10 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values\strings.xml : 62 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values\styles.xml : 58 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values\themes.xml : 14 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-land\dimens.xml : 3 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-night\themes.xml : 7 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-v23\themes.xml : 8 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-w1240dp\dimens.xml : 3 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-w600dp\dimens.xml : 3 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\values-w820dp\dimens.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\xml\backup_rules.xml : 13 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\xml\data_extraction_rules.xml : 19 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\res\xml\file_paths.xml : 6 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\AndroidManifest.xml : 78 lines
+C:\Users\Nesy\AndroidStudioProjects\MyApplication2\app\src\main\new.xml : 0 lines
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("XML files count: " + $xmlFiles.Count)
+XML files count: 110
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("XML total lines: " + $xmlTotalLines)
+XML total lines: 5947
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> # ==== Total Summary ====
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output "`n=== Total Summary ==="
+
+=== Total Summary ===
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $totalFiles = $javaFiles.Count + $xmlFiles.Count
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> $totalLines = $javaTotalLines + $xmlTotalLines
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("Total files: " + $totalFiles)
+Total files: 141
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Write-Output ("Total lines: " + $totalLines)
+Total lines: 7722
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> # סגירת ההקלטה
+PS C:\Users\Nesy\AndroidStudioProjects\MyApplication2> Stop-Transcript
+**********************
+Windows PowerShell transcript end
+End time: 20250817023331
+**********************

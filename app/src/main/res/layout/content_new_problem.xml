@@ -115,7 +115,27 @@
                     android:clipToPadding="false"
                     android:padding="4dp"/>
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnRecommendationsItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:text="הוספת המלצת מחיר"
+                    android:background="@drawable/button_background"
+                    android:textColor="#ffffff"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- RecyclerView סטנדרטים עם גלילה אופקית פנימית -->
+
+
                 <!-- כפתור בחירת תאריך -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecommendations"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:clipToPadding="false"
+                    android:padding="4dp"
+                    android:scrollbars="vertical" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnPickDate"
                     android:layout_width="match_parent"

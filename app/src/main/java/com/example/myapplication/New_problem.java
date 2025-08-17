@@ -15,7 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Recommendations.AddRecommendations;
+import com.example.myapplication.Recommendations.RecommendationsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.myapplication.Recommendations.RecommendationsItem;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,19 +27,23 @@ import java.util.Calendar;
 public class New_problem extends AppCompatActivity {
 
     private EditText carrierEditText, subTopicEditText, descriptionEditText, remarkEditText;
-    private Button btnStandardItem, btnPickDate, btnPickFromGallery, btnOpenCamera;
+    private Button btnStandardItem, btnPickDate, btnPickFromGallery, btnOpenCamera, btnRecommendationsItem;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private ImagesAdapter imagesAdapter;
 
-    private RecyclerView recyclerViewStandard, recyclerViewImages;
+    private RecyclerView recyclerViewStandard, recyclerViewImages, recyclerViewRecommendations;
     private standardAdapter adapter;
+    private RecommendationsAdapter adapterRecommendations;
     private ArrayList<standardItem> items;
+    private ArrayList<RecommendationsItem> itemsRecommendations;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
 
-    private static final int ADD_ITEM_REQUEST = 1;
+    private static final int ADD_STANDARD_REQUEST = 1;
     private static final int EDIT_ITEM_REQUEST = 2;
+    private static final int ADD_RECOMMENDATION_REQUEST = 3;
+    private static final int EDIT_ITEM_RECOMMENDATION_REQUEST = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,8 @@ public class New_problem extends AppCompatActivity {
         btnStandardItem = findViewById(R.id.btnStandardItem);
         recyclerViewStandard = findViewById(R.id.recyclerViewStandard);
         recyclerViewImages = findViewById(R.id.recyclerViewImages);
+        recyclerViewRecommendations = findViewById(R.id.recyclerViewRecommendations);
+        btnRecommendationsItem = findViewById(R.id.btnRecommendationsItem);
 
         // ------------------------
         // RecyclerView סטנדרטים
@@ -63,9 +73,23 @@ public class New_problem extends AppCompatActivity {
         recyclerViewStandard.setAdapter(adapter);
         updateRecyclerViewVisibility();
 
+        // ------------------------
+        // RecyclerView המלצות
+        // ------------------------
+        itemsRecommendations = new ArrayList<>();
+        adapterRecommendations = new RecommendationsAdapter(this, itemsRecommendations);
+        recyclerViewRecommendations.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewRecommendations.setAdapter(adapterRecommendations);
+        updateRecyclerViewRecommendationsVisibility();
+
         btnStandardItem.setOnClickListener(v -> {
             Intent intent = new Intent(New_problem.this, AddStandard.class);
-            startActivityForResult(intent, ADD_ITEM_REQUEST);
+            startActivityForResult(intent, ADD_STANDARD_REQUEST);
+        });
+
+        btnRecommendationsItem.setOnClickListener(v -> {
+            Intent intent1 = new Intent(New_problem.this, AddRecommendations.class);
+            startActivityForResult(intent1, ADD_RECOMMENDATION_REQUEST);
         });
 
         // ------------------------
@@ -156,24 +180,52 @@ public class New_problem extends AppCompatActivity {
 
         if (resultCode != RESULT_OK || data == null) return;
 
-        // הוספת פריט חדש
-        if (requestCode == ADD_ITEM_REQUEST) {
-            String standard  = data.getStringExtra("standard");
+        if (requestCode == ADD_STANDARD_REQUEST) {
+            String standard = data.getStringExtra("standard");
             standardItem newItem = new standardItem(standard);
             items.add(newItem);
             adapter.notifyItemInserted(items.size() - 1);
             updateRecyclerViewVisibility();
         }
 
-        // עריכת פריט קיים
+        if (requestCode == ADD_RECOMMENDATION_REQUEST) {
+            String description = data.getStringExtra("description");
+            String amount = data.getStringExtra("amount");
+            String unitPrice = data.getStringExtra("unitPrice");
+            String unit = data.getStringExtra("unit");
+            String totalPrice = data.getStringExtra("totalPrice");
+
+            RecommendationsItem newItem = new RecommendationsItem(description, amount, unitPrice, unit, totalPrice);
+            itemsRecommendations.add(newItem);
+            adapterRecommendations.notifyItemInserted(itemsRecommendations.size() - 1);
+            updateRecyclerViewRecommendationsVisibility();
+        }
+
         if (requestCode == EDIT_ITEM_REQUEST) {
             int position = data.getIntExtra("position", -1);
             String standard = data.getStringExtra("standard");
-
             if (position != -1) {
                 standardItem updatedItem = items.get(position);
                 updatedItem.setStandard(standard);
                 adapter.notifyItemChanged(position);
+                updateRecyclerViewVisibility();
+            }
+        }
+        if (requestCode == EDIT_ITEM_RECOMMENDATION_REQUEST) {
+            int position1 = data.getIntExtra("position1", -1);
+            String description = data.getStringExtra("description");
+            String amount = data.getStringExtra("amount");
+            String unitPrice = data.getStringExtra("unitPrice");
+            String unit = data.getStringExtra("unit");
+            String totalPrice = data.getStringExtra("totalPrice");;
+            if (position1 != -1) {
+                RecommendationsItem updatedItem = itemsRecommendations.get(position1);
+                updatedItem.setDescription(description);
+                updatedItem.setAmount(amount);
+                updatedItem.setUnitPrice(unitPrice);
+                updatedItem.setUnit(unit);
+                updatedItem.setTotalPrice(totalPrice);
+                adapterRecommendations.notifyItemChanged(position1);
                 updateRecyclerViewVisibility();
             }
         }
@@ -187,6 +239,14 @@ public class New_problem extends AppCompatActivity {
             recyclerViewStandard.setVisibility(View.GONE);
         } else {
             recyclerViewStandard.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void updateRecyclerViewRecommendationsVisibility() {
+        if (adapterRecommendations.getItemCount() == 0) {
+            recyclerViewRecommendations.setVisibility(View.GONE);
+        } else {
+            recyclerViewRecommendations.setVisibility(View.VISIBLE);
         }
     }
 

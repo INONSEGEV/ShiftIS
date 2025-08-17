@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- הרשאות -->
-    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -20,6 +19,8 @@
         tools:targetApi="29">
 
 
+
+
         <activity
             android:name=".AddStandard"
             android:exported="false">
@@ -28,6 +29,15 @@
             android:name=".EditStandard"
             android:exported="false">
     </activity>
+        <activity
+            android:name=".Recommendations.AddRecommendations"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".Recommendations.EditItemRecommendations"
+            android:exported="false">
+        </activity>
+
         <!-- You might have intent filters here depending on how you start this activity -->
 
         <activity
