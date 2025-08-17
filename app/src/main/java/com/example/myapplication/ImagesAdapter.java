@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,25 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Uri imageUri = images.get(position);
-        holder.imageView.setImageURI(imageUri);
+
+        // טעינת תמונה בלי ה-Toast המעצבן
+        try {
+            Drawable drawable;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                drawable = android.graphics.ImageDecoder.decodeDrawable(
+                        android.graphics.ImageDecoder.createSource(context.getContentResolver(), imageUri)
+                );
+            } else {
+                drawable = Drawable.createFromStream(
+                        context.getContentResolver().openInputStream(imageUri),
+                        imageUri.toString()
+                );
+            }
+            holder.imageView.setImageDrawable(drawable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.imageView.setImageResource(R.drawable.ic_delete); // תמונה ברירת מחדל במקרה של שגיאה
+        }
 
         // כפתור מחיקה
         holder.btnDelete.setOnClickListener(v -> {
@@ -43,7 +63,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
                 notifyItemRemoved(pos);
                 notifyItemRangeChanged(pos, images.size());
 
-                // הוספתי את זה: בדיקה אם הרשימה ריקה כדי להסתיר את RecyclerView
                 if (context instanceof New_problem) {
                     ((New_problem) context).updateRecyclerViewImagesVisibility();
                 }
@@ -63,7 +82,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageItem);
-            btnDelete = itemView.findViewById(R.id.btnDeleteItem); // כפתור המחיקה
+            btnDelete = itemView.findViewById(R.id.btnDeleteItem);
         }
     }
 }

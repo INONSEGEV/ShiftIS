@@ -16,7 +16,6 @@ import java.util.List;
 
 public class standardAdapter extends RecyclerView.Adapter<standardAdapter.ItemViewHolder> {
 
-
     private final Context context;
     private final List<standardItem> items;
 
@@ -36,41 +35,33 @@ public class standardAdapter extends RecyclerView.Adapter<standardAdapter.ItemVi
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         standardItem item = items.get(position);
 
-        if (holder.standard != null) {
-            holder.standard.setText(item.getStandard());
-        } else {
-            Toast.makeText(context, "TextView לא נמצא ב-XML", Toast.LENGTH_SHORT).show();
-        }
+        holder.standard.setText(item.getStandard());
 
-        if (holder.btnSave != null) {
-            // עריכה
-            holder.btnSave.setOnClickListener(v -> {
-                Intent intent = new Intent(context, EditStandard.class);
-                intent.putExtra("standard", item.getStandard());
-                intent.putExtra("position", position);
+        // כפתור עריכה
+        holder.btnSave.setOnClickListener(v -> {
+            Intent intent = new Intent(context, EditStandard.class);
+            intent.putExtra("standard", item.getStandard());
+            intent.putExtra("position", position);
+            intent.putParcelableArrayListExtra("selectedImages", item.getImages()); // מעביר תמונות
+
+            if (context instanceof New_problem) {
+                ((New_problem) context).startActivityForResult(intent, New_problem.EDIT_ITEM_REQUEST);
+            }
+        });
+
+        // כפתור מחיקה
+        holder.deleteButton.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                items.remove(pos);
+                notifyItemRemoved(pos);
+                notifyItemRangeChanged(pos, items.size());
 
                 if (context instanceof New_problem) {
-                    ((New_problem) context).startActivityForResult(intent, 2);
+                    ((New_problem) context).updateRecyclerViewVisibility();
                 }
-            });
-        }
-
-        if (holder.deleteButton != null) {
-            // מחיקה
-            holder.deleteButton.setOnClickListener(v -> {
-                int pos = holder.getAdapterPosition();
-                if (pos != RecyclerView.NO_POSITION) {
-                    items.remove(pos);
-                    notifyItemRemoved(pos);
-                    notifyItemRangeChanged(pos, items.size());
-
-                    // הוספתי את זה: בדיקה אם הרשימה ריקה כדי להסתיר את RecyclerView
-                    if (context instanceof New_problem) {
-                        ((New_problem) context).updateRecyclerViewVisibility();
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 
     @Override
@@ -80,8 +71,8 @@ public class standardAdapter extends RecyclerView.Adapter<standardAdapter.ItemVi
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView standard;
-        ImageButton btnSave; // כפתור העריכה
-        ImageButton deleteButton;    // כפתור המחיקה
+        ImageButton btnSave;
+        ImageButton deleteButton;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -19,7 +18,6 @@ import com.example.myapplication.Recommendations.AddRecommendations;
 import com.example.myapplication.Recommendations.RecommendationsAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.example.myapplication.Recommendations.RecommendationsItem;
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,17 +38,16 @@ public class New_problem extends AppCompatActivity {
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
 
-    private static final int ADD_STANDARD_REQUEST = 1;
-    private static final int EDIT_ITEM_REQUEST = 2;
-    private static final int ADD_RECOMMENDATION_REQUEST = 3;
-    private static final int EDIT_ITEM_RECOMMENDATION_REQUEST = 4;
+    public static final int ADD_STANDARD_REQUEST = 1;
+    public static final int EDIT_ITEM_REQUEST = 2;
+    public static final int ADD_RECOMMENDATION_REQUEST = 3;
+    public static final int EDIT_ITEM_RECOMMENDATION_REQUEST = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_problem);
 
-        // EditTexts ו-Buttons
         carrierEditText = findViewById(R.id.carrierEditText);
         subTopicEditText = findViewById(R.id.SubTopicEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
@@ -149,7 +146,6 @@ public class New_problem extends AppCompatActivity {
                             imagesAdapter.notifyItemInserted(selectedImages.size() - 1);
                         }
                         updateRecyclerViewImagesVisibility();
-                        Toast.makeText(this, selectedImages.size() + " תמונות נבחרו", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -164,16 +160,12 @@ public class New_problem extends AppCompatActivity {
                             selectedImages.addAll(cameraImages);
                             imagesAdapter.notifyItemRangeInserted(startIndex, cameraImages.size());
                             updateRecyclerViewImagesVisibility();
-                            Toast.makeText(this, cameraImages.size() + " תמונות צולמו", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
     }
 
-    // ------------------------
-    // טיפול ב-ActivityResult
-    // ------------------------
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -182,7 +174,9 @@ public class New_problem extends AppCompatActivity {
 
         if (requestCode == ADD_STANDARD_REQUEST) {
             String standard = data.getStringExtra("standard");
+            ArrayList<Uri> newImages = data.getParcelableArrayListExtra("selectedImages");
             standardItem newItem = new standardItem(standard);
+            if (newImages != null) newItem.setImages(newImages);
             items.add(newItem);
             adapter.notifyItemInserted(items.size() - 1);
             updateRecyclerViewVisibility();
@@ -204,20 +198,27 @@ public class New_problem extends AppCompatActivity {
         if (requestCode == EDIT_ITEM_REQUEST) {
             int position = data.getIntExtra("position", -1);
             String standard = data.getStringExtra("standard");
+            ArrayList<Uri> updatedImages = data.getParcelableArrayListExtra("selectedImages");
+
             if (position != -1) {
                 standardItem updatedItem = items.get(position);
                 updatedItem.setStandard(standard);
+                if (updatedImages != null) {
+                    updatedItem.setImages(updatedImages);
+                }
                 adapter.notifyItemChanged(position);
                 updateRecyclerViewVisibility();
             }
         }
+
         if (requestCode == EDIT_ITEM_RECOMMENDATION_REQUEST) {
             int position1 = data.getIntExtra("position1", -1);
             String description = data.getStringExtra("description");
             String amount = data.getStringExtra("amount");
             String unitPrice = data.getStringExtra("unitPrice");
             String unit = data.getStringExtra("unit");
-            String totalPrice = data.getStringExtra("totalPrice");;
+            String totalPrice = data.getStringExtra("totalPrice");
+
             if (position1 != -1) {
                 RecommendationsItem updatedItem = itemsRecommendations.get(position1);
                 updatedItem.setDescription(description);
@@ -226,35 +227,20 @@ public class New_problem extends AppCompatActivity {
                 updatedItem.setUnit(unit);
                 updatedItem.setTotalPrice(totalPrice);
                 adapterRecommendations.notifyItemChanged(position1);
-                updateRecyclerViewVisibility();
+                updateRecyclerViewRecommendationsVisibility();
             }
         }
     }
 
-    // ------------------------
-    // פונקציות עזר: הסתרה/הצגה של Recyclerview
-    // ------------------------
     public void updateRecyclerViewVisibility() {
-        if (adapter.getItemCount() == 0) {
-            recyclerViewStandard.setVisibility(View.GONE);
-        } else {
-            recyclerViewStandard.setVisibility(View.VISIBLE);
-        }
+        recyclerViewStandard.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
     }
 
     public void updateRecyclerViewRecommendationsVisibility() {
-        if (adapterRecommendations.getItemCount() == 0) {
-            recyclerViewRecommendations.setVisibility(View.GONE);
-        } else {
-            recyclerViewRecommendations.setVisibility(View.VISIBLE);
-        }
+        recyclerViewRecommendations.setVisibility(adapterRecommendations.getItemCount() == 0 ? View.GONE : View.VISIBLE);
     }
 
     public void updateRecyclerViewImagesVisibility() {
-        if (imagesAdapter.getItemCount() == 0) {
-            recyclerViewImages.setVisibility(View.GONE);
-        } else {
-            recyclerViewImages.setVisibility(View.VISIBLE);
-        }
+        recyclerViewImages.setVisibility(imagesAdapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
     }
 }
