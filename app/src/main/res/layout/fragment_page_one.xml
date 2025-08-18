@@ -139,6 +139,17 @@
                         android:layout_marginTop="10dp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:text="בחר שעה"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/button_background"
+                        android:layout_marginTop="10dp"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnSelectImage"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"

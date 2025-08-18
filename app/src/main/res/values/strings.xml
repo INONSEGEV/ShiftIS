@@ -7,6 +7,14 @@
     <string name="next">Next</string>
     <string name="default_web_client_id">[422242288564-8883h6bllbqmvavqfclv9jqd7vmjdd57.apps.googleusercontent.com]</string>
 
+    <string-array name="options_array">
+        <item>Option 1</item>
+        <item>Option 2</item>
+        <item>Option 3</item>
+    </string-array>
+
+
+
     <string name="previous">Previous</string>
 
     <string name="lorem_ipsum">

@@ -42,14 +42,17 @@
                     android:text="נושא"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
-                <EditText
+
+                <!-- AutoCompleteTextView במקום EditText -->
+                <AutoCompleteTextView
                     android:id="@+id/carrierEditText"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:background="@drawable/input_background"
                     android:textColor="#ffffff"
                     android:padding="12dp"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="12dp"
+                    android:completionThreshold="1" /> <!-- מתחיל להציע אחרי תו אחד -->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -87,7 +90,6 @@
                     android:text="הערה"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
-
                 <EditText
                     android:id="@+id/remarkEditText"
                     android:layout_width="match_parent"
@@ -97,6 +99,7 @@
                     android:padding="12dp"
                     android:textColor="#ffffff" />
 
+                <!-- שאר הקוד נשאר ללא שינוי -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnStandardItem"
                     android:layout_width="match_parent"
@@ -106,7 +109,6 @@
                     android:textColor="#ffffff"
                     android:layout_marginBottom="12dp"/>
 
-                <!-- RecyclerView סטנדרטים עם גלילה אופקית פנימית -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewStandard"
                     android:layout_width="match_parent"
@@ -124,10 +126,6 @@
                     android:textColor="#ffffff"
                     android:layout_marginBottom="12dp"/>
 
-                <!-- RecyclerView סטנדרטים עם גלילה אופקית פנימית -->
-
-
-                <!-- כפתור בחירת תאריך -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewRecommendations"
                     android:layout_width="match_parent"
@@ -145,7 +143,6 @@
                     android:textColor="#ffffff"
                     android:layout_marginBottom="12dp"/>
 
-                <!-- כפתורי בחירת/צילום תמונות -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -174,7 +171,6 @@
                         android:textColor="#ffffff" />
                 </LinearLayout>
 
-                <!-- RecyclerView גלילה אופקית לתמונות שנבחרו -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewImages"
                     android:layout_width="match_parent"

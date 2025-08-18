@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -34,7 +36,7 @@ import java.util.Map;
 
 public class PageOneFragment extends Fragment {
 
-    private Button btnPickDate, btnSelectImage, btnStartSpeech, btnStopSpeech;
+    private Button btnPickDate, btnSelectImage, btnStartSpeech, btnStopSpeech, btnTime;
     private EditText checkerEditText, contractorEditText, presentEditText;
     private ImageView imageView;
     private ImageButton btnDeleteImage;
@@ -79,6 +81,7 @@ public class PageOneFragment extends Fragment {
         btnDeleteImage = root.findViewById(R.id.btnDeleteImage);
         btnStartSpeech = root.findViewById(R.id.btnStartSpeech);
         btnStopSpeech = root.findViewById(R.id.btnStopSpeech);
+        btnTime = root.findViewById(R.id.btnTime); // הכפתור החדש
 
         // --- ActivityResultLauncher ---
         pickImageLauncher = registerForActivityResult(
@@ -105,6 +108,8 @@ public class PageOneFragment extends Fragment {
             imageView.setImageDrawable(null);
             btnDeleteImage.setVisibility(View.GONE);
         });
+
+        btnTime.setOnClickListener(v -> showTimePicker()); // פתיחת TimePickerDialog
 
         // --- דיבור ---
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getContext());
@@ -236,6 +241,18 @@ public class PageOneFragment extends Fragment {
                 year, month, day);
 
         dialog.show();
+    }
+
+    private void showTimePicker() {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePicker = new TimePickerDialog(getContext(),
+                (TimePicker view, int selectedHour, int selectedMinute) ->
+                        btnTime.setText(String.format("%02d:%02d", selectedHour, selectedMinute)),
+                hour, minute, true);
+        timePicker.show();
     }
 
     private void showImageOptions() {

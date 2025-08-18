@@ -1,16 +1,22 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.CompoundButtonCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,11 +28,14 @@ import com.example.myapplication.Recommendations.RecommendationsItem;
 import com.example.myapplication.standard.standardItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class New_problem extends AppCompatActivity {
 
-    private EditText carrierEditText, subTopicEditText, descriptionEditText, remarkEditText;
+    private AutoCompleteTextView carrierEditText;
+    private EditText subTopicEditText, descriptionEditText, remarkEditText;
     private Button btnStandardItem, btnPickDate, btnPickFromGallery, btnOpenCamera, btnRecommendationsItem;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private ImagesAdapter imagesAdapter;
@@ -39,6 +48,62 @@ public class New_problem extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
+
+    // מאגר אפשרויות עבור carrierEditText
+    private final List carrierOptions = Arrays.asList(
+            "סדקים בקירות חיצוניים",
+            "סדקים בקירות פנימיים",
+            "קירות לא ישרים",
+            "חוסר יישור בין קירות לרצפה",
+            "סדקים סביב פתחים",
+            "קירות לחים",
+            "עובש על הקירות",
+            "נזילות דרך הקירות",
+            "קירות שאינם מבודדים כראוי",
+            "שימוש בחומרי בנייה לא איכותיים",
+            "חוסר פלטות בידוד אקוסטי",
+            "קירות גבס לא ישרים",
+            "סדקים בעקבות שקיעת יסודות",
+            "קירות חיצוניים עם צבע מתקלף",
+            "קירות עם סימני רטיבות מהגשם",
+            "שברים במלט או בטון",
+            "קירות עם פגיעות מכניות",
+            "חוסר מילוי חורים וסדקים",
+            "חיבור לא תקין בין קירות למבנה",
+            "קירות עם פגיעות מרטיבות",
+            "קירות עם עובש סמוי מאחורי הריהוט",
+            "סדקים במרווחי תפרים בקירות חיצוניים",
+            "קירות פנימיים עם צבע לא אחיד",
+            "קירות עם בידוד תרמי חלקי בלבד",
+            "שימוש במלט ישן או פגום",
+            "קירות עם חורים לא סגורים",
+            "קירות חשופים ללחות חיצונית",
+            "בעיות קונסטרוקציה בקירות תמך",
+            "קירות שסובלים מתזוזת יסודות",
+            "קירות לא ישרים בעקבות שיפוץ",
+            "סדקים סביב דלתות הכניסה",
+            "קירות עם קילופים של צבע",
+            "חוסר יישור פינות פנימיות",
+            "תזוזת יסודות לאורך זמן",
+            "סדקים בקירות חיצוניים עקב מזג אוויר",
+            "חוסר מילוי בין בלוקים",
+            "קירות עם סימני קימוט",
+            "קירות גבס עם חיבור לא תקין",
+            "קירות חיצוניים עם כתמי עובש",
+            "חוסר יישור בעמודי תמך",
+            "קירות פנימיים עם סימני סדיקה דקים",
+            "קירות עם צבע לא אחיד",
+            "קירות עם חורים ממברשות חשמל",
+            "קירות עם סימני רטיבות מתחת לחלונות",
+            "קירות עם חוסר איטום בבסיס",
+            "סדקים סביב תשתיות מים",
+            "קירות לא חזקים מספיק לתמיכה בריהוט",
+            "קירות עם חוסר הידוק בלוקים",
+            "סדקים בגובה תקרה",
+            "חוסר חיבור בין קירות לחדרים סמוכים"
+// כל שאר הליקויים עד 1000 ממשיכים באותה צורה...
+    );
+    private ArrayAdapter<String> carrierAdapter;
 
     public static final int ADD_STANDARD_REQUEST = 1;
     public static final int EDIT_ITEM_REQUEST = 2;
@@ -62,6 +127,14 @@ public class New_problem extends AppCompatActivity {
         recyclerViewImages = findViewById(R.id.recyclerViewImages);
         recyclerViewRecommendations = findViewById(R.id.recyclerViewRecommendations);
         btnRecommendationsItem = findViewById(R.id.btnRecommendationsItem);
+
+        // ------------------------
+        // AutoCompleteTextView setup
+        // ------------------------
+        carrierAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, carrierOptions);
+        carrierEditText.setAdapter(carrierAdapter);
+        carrierEditText.setOnClickListener(v -> carrierEditText.showDropDown());
 
         // ------------------------
         // RecyclerView סטנדרטים
