@@ -26,6 +26,16 @@
 
         <!-- כפתור הוספת נושא -->
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/A"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="A"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/button_background"
+            android:layout_marginBottom="16dp"/>
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/addButtonCarrier"
             android:layout_width="match_parent"
             android:layout_height="48dp"

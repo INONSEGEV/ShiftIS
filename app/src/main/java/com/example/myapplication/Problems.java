@@ -63,6 +63,12 @@ public class Problems extends Fragment {
             startActivityForResult(intent, ADD_CARRIER_REQUEST);
         });
 
+        Button A = view.findViewById(R.id.A);
+        A.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), New_problem.class);
+            startActivity(intent);
+        });
+
         return view;
     }
 
