@@ -14,9 +14,11 @@ import android.widget.RadioButton;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.CompoundButtonCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;   // 👈 חדש
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +32,7 @@ import com.example.myapplication.standard.standardItem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;   // 👈 חדש
 import java.util.List;
 
 public class New_problem extends AppCompatActivity {
@@ -101,7 +104,6 @@ public class New_problem extends AppCompatActivity {
             "קירות עם חוסר הידוק בלוקים",
             "סדקים בגובה תקרה",
             "חוסר חיבור בין קירות לחדרים סמוכים"
-// כל שאר הליקויים עד 1000 ממשיכים באותה צורה...
     );
     private ArrayAdapter<String> carrierAdapter;
 
@@ -144,6 +146,30 @@ public class New_problem extends AppCompatActivity {
         recyclerViewStandard.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewStandard.setAdapter(adapter);
         updateRecyclerViewVisibility();
+
+        // ✅ הוספת ItemTouchHelper לגרירת standard items
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                int fromPos = viewHolder.getAdapterPosition();
+                int toPos = target.getAdapterPosition();
+
+                // החלפת מקומות במערך
+                Collections.swap(items, fromPos, toPos);
+                adapter.notifyItemMoved(fromPos, toPos);
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // לא רוצים סווייפ למחיקה
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(recyclerViewStandard);
 
         // ------------------------
         // RecyclerView המלצות
