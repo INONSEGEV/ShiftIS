@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.standard;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.New_problem;
+import com.example.myapplication.R;
 
 import java.util.List;
 

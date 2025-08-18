@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.standard;
 
 import android.net.Uri;
 import java.util.ArrayList;

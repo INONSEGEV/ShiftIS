@@ -1,10 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.standard;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,20 +9,20 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.CameraActivity;
+import com.example.myapplication.ImagesAdapter;
+import com.example.myapplication.R;
+
 import java.util.ArrayList;
 
-public class EditStandard extends AppCompatActivity {
-
-    private static final int PERMISSION_REQUEST_CODE = 100;
+public class AddStandard extends AppCompatActivity {
 
     private EditText standardEditText;
     private Button btnSave, btnPickFromGallery, btnOpenCamera;
-    private int position;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private ImagesAdapter imagesAdapter;
 
@@ -35,28 +32,18 @@ public class EditStandard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_standard);
-
-        checkPermissions(); // <- בקשת הרשאות
+        setContentView(R.layout.add_standard);
 
         standardEditText = findViewById(R.id.standardEditText);
         btnSave = findViewById(R.id.btnSave);
         btnPickFromGallery = findViewById(R.id.btnSelectImage);
         btnOpenCamera = findViewById(R.id.btnCaptureImage);
 
-        // קבלת הנתונים מה-Intent
-        Intent intent = getIntent();
-        position = intent.getIntExtra("position", -1);
-        String standard = intent.getStringExtra("standard");
-        ArrayList<Uri> existingImages = intent.getParcelableArrayListExtra("selectedImages");
-        if (existingImages != null) selectedImages.addAll(existingImages);
-
-        standardEditText.setText(standard);
-
         // RecyclerView להצגת התמונות
         RecyclerView recyclerViewImages = findViewById(R.id.recyclerViewImages);
         imagesAdapter = new ImagesAdapter(this, selectedImages);
-        recyclerViewImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewImages.setLayoutManager(layoutManager);
         recyclerViewImages.setAdapter(imagesAdapter);
 
         // ------------------------
@@ -98,54 +85,26 @@ public class EditStandard extends AppCompatActivity {
         // ------------------------
         // כפתורים
         // ------------------------
-        btnPickFromGallery.setOnClickListener(v -> openGallery());
-        btnOpenCamera.setOnClickListener(v -> openCamera());
+        btnPickFromGallery.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            galleryLauncher.launch(intent);
+        });
+
+        btnOpenCamera.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CameraActivity.class);
+            cameraLauncher.launch(intent);
+        });
 
         btnSave.setOnClickListener(v -> {
+            String standard = standardEditText.getText().toString();
+
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("position", position);
-            resultIntent.putExtra("standard", standardEditText.getText().toString());
+            resultIntent.putExtra("standard", standard);
             resultIntent.putParcelableArrayListExtra("selectedImages", selectedImages);
             setResult(RESULT_OK, resultIntent);
             finish();
         });
-    }
-
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        galleryLauncher.launch(intent);
-    }
-
-    private void openCamera() {
-        Intent intent = new Intent(this, CameraActivity.class);
-        cameraLauncher.launch(intent);
-    }
-
-    private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                    || checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-
-                requestPermissions(new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA
-                }, PERMISSION_REQUEST_CODE);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            for (int result : grantResults) {
-                if (result != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "נדרשות הרשאות כדי לגשת לתמונות/מצלמה", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        }
     }
 }

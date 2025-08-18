@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
 
     <application
@@ -23,11 +24,19 @@
 
 
         <activity
-            android:name=".AddStandard"
+            android:name=".standard.AddStandard"
             android:exported="false">
     </activity>
         <activity
-            android:name=".EditStandard"
+            android:name=".carrier.AddCreditor"
+            android:exported="false">
+    </activity>
+        <activity
+            android:name=".carrier.EditCarrier"
+            android:exported="false">
+    </activity>
+        <activity
+            android:name=".standard.EditStandard"
             android:exported="false">
     </activity>
         <activity

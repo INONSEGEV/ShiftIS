@@ -12,10 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.EditStandard;
 import com.example.myapplication.New_problem;
 import com.example.myapplication.R;
-import com.example.myapplication.Recommendations.RecommendationsItem;
 
 import java.util.List;
 

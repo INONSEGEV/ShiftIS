@@ -7,7 +7,6 @@
     android:background="@drawable/gradient_background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +14,6 @@
         android:clipToPadding="false"
         android:padding="20dp">
 
-        <!-- תוכן המסך -->
         <LinearLayout
             android:id="@+id/main"
             android:orientation="vertical"
@@ -38,7 +36,7 @@
                     android:orientation="vertical"
                     android:padding="30dp">
 
-                    <!-- Header -->
+                    <!-- כותרת -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -49,22 +47,7 @@
                         android:gravity="center"
                         android:layout_marginBottom="40dp" />
 
-                    <!-- Error Message -->
-                    <TextView
-                        android:id="@+id/errorMsg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ff6b6b"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:layout_marginBottom="25dp"
-                        android:background="@drawable/error_background"
-                        android:padding="12dp"
-                        android:visibility="gone"
-                        android:alpha="0" />
-
-                    <!-- Email Field -->
+                    <!-- שדות טקסט -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,25 +55,20 @@
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp" />
-
+                        android:layout_marginBottom="8dp" />
                     <EditText
                         android:id="@+id/checkerEditText"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:inputType="textEmailAddress"
                         android:background="@drawable/input_background"
                         android:textColor="#ffffff"
                         android:textColorHint="#66ffffff"
                         android:textSize="16sp"
                         android:padding="18dp"
                         android:layout_marginBottom="20dp"
-                        android:maxLength="50"
                         android:layoutDirection="rtl"
                         android:textDirection="rtl" />
 
-                    <!-- Password Field -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,23 +76,20 @@
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp" />
-
+                        android:layout_marginBottom="8dp" />
                     <EditText
                         android:id="@+id/contractorEditText"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:inputType="textEmailAddress"
                         android:background="@drawable/input_background"
                         android:textColor="#ffffff"
                         android:textColorHint="#66ffffff"
                         android:textSize="16sp"
                         android:padding="18dp"
                         android:layout_marginBottom="20dp"
-                        android:maxLength="50"
                         android:layoutDirection="rtl"
                         android:textDirection="rtl" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -122,22 +97,36 @@
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp" />
+                        android:layout_marginBottom="8dp" />
                     <EditText
                         android:id="@+id/presentEditText"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:inputType="textEmailAddress"
                         android:background="@drawable/input_background"
                         android:textColor="#ffffff"
                         android:textColorHint="#66ffffff"
                         android:textSize="16sp"
                         android:padding="18dp"
                         android:layout_marginBottom="20dp"
-                        android:maxLength="50"
                         android:layoutDirection="rtl"
                         android:textDirection="rtl" />
+
+                    <!-- כפתורי הקלטה -->
+                    <Button
+                        android:id="@+id/btnStartSpeech"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="התחל הקלטה"
+                        android:layout_marginTop="20dp"/>
+
+                    <Button
+                        android:id="@+id/btnStopSpeech"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="עצור הקלטה"
+                        android:layout_marginTop="10dp"/>
+
+                    <!-- כפתורי תאריך ותמונה נשארים -->
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnPickDate"
                         android:layout_width="match_parent"
