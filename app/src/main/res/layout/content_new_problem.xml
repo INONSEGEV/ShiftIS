@@ -23,12 +23,12 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="30dp">
+                android:padding="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="נתון חדש"
+                    android:text="ממצא חדש"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff"
@@ -75,7 +75,7 @@
                     android:text="תאור"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/descriptionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -115,6 +115,7 @@
                     android:layout_height="140dp"
                     android:scrollbars="vertical"
                     android:clipToPadding="false"
+                    android:visibility="gone"
                     android:padding="4dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -132,6 +133,7 @@
                     android:layout_height="140dp"
                     android:clipToPadding="false"
                     android:padding="4dp"
+                    android:visibility="gone"
                     android:scrollbars="vertical" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -177,6 +179,7 @@
                     android:layout_height="280dp"
                     android:scrollbars="horizontal"
                     android:clipToPadding="false"
+                    android:visibility="gone"
                     android:padding="8dp"/>
 
             </LinearLayout>

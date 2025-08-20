@@ -3,6 +3,7 @@ package com.example.myapplication.standard;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class AddStandard extends AppCompatActivity {
     private Button btnSave, btnPickFromGallery, btnOpenCamera;
     private ArrayList<Uri> selectedImages = new ArrayList<>();
     private ImagesAdapter imagesAdapter;
+    private RecyclerView recyclerViewImages;
 
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
@@ -40,7 +42,7 @@ public class AddStandard extends AppCompatActivity {
         btnOpenCamera = findViewById(R.id.btnCaptureImage);
 
         // RecyclerView להצגת התמונות
-        RecyclerView recyclerViewImages = findViewById(R.id.recyclerViewImages);
+        recyclerViewImages = findViewById(R.id.recyclerViewImages);
         imagesAdapter = new ImagesAdapter(this, selectedImages);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewImages.setLayoutManager(layoutManager);
@@ -63,6 +65,7 @@ public class AddStandard extends AppCompatActivity {
                             selectedImages.add(result.getData().getData());
                         }
                         imagesAdapter.notifyDataSetChanged();
+                        updateRecyclerViewImagesVisibility();
                         Toast.makeText(this, selectedImages.size() + " תמונות נבחרו", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -76,6 +79,7 @@ public class AddStandard extends AppCompatActivity {
                         if (cameraImages != null) {
                             selectedImages.addAll(cameraImages);
                             imagesAdapter.notifyDataSetChanged();
+                            updateRecyclerViewImagesVisibility();
                             Toast.makeText(this, cameraImages.size() + " תמונות צולמו", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -106,5 +110,9 @@ public class AddStandard extends AppCompatActivity {
             setResult(RESULT_OK, resultIntent);
             finish();
         });
+    }
+
+    public void updateRecyclerViewImagesVisibility() {
+        recyclerViewImages.setVisibility(imagesAdapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
     }
 }

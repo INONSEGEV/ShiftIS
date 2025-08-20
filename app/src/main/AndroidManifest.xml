@@ -58,6 +58,7 @@
         <activity
             android:name=".New_problem"
             android:exported="true"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.MyApplication" />
         <activity
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,16 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
+
+        int layoutRes;
+
+        // בדיקה אוטומטית לפי סוג ה-Context
+        if (context instanceof New_problem) {
+            layoutRes = R.layout.item_image; // דף X
+        } else {
+            layoutRes = R.layout.image_row; // דף Y
+        }
+        View view = LayoutInflater.from(context).inflate(layoutRes, parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -37,7 +47,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Uri imageUri = images.get(position);
 
-        // טעינת תמונה בלי ה-Toast המעצבן
         try {
             Drawable drawable;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -53,7 +62,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
             holder.imageView.setImageDrawable(drawable);
         } catch (Exception e) {
             e.printStackTrace();
-            holder.imageView.setImageResource(R.drawable.ic_delete); // תמונה ברירת מחדל במקרה של שגיאה
+            holder.imageView.setImageResource(R.drawable.ic_close_white); // תמונה ברירת מחדל במקרה של שגיאה
         }
 
         // כפתור מחיקה
@@ -70,18 +79,33 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
             }
         });
 
-        // כפתור עריכה
         holder.btnEdit.setOnClickListener(v -> {
-            Intent editIntent = new Intent(Intent.ACTION_EDIT);
-            editIntent.setDataAndType(imageUri, "image/*");
-            editIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             try {
-                context.startActivity(Intent.createChooser(editIntent, "ערוך תמונה"));
+                Intent editIntent = new Intent(Intent.ACTION_VIEW);
+                editIntent.setDataAndType(imageUri, "image/*");
+                editIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                // מנסה לפתוח עם גלריה של סמסונג
+                editIntent.setPackage("com.sec.android.gallery3d");
+
+                context.startActivity(editIntent);
+
             } catch (Exception e) {
                 e.printStackTrace();
-                // אפשר להוסיף Toast אם אין אפליקציית עריכה מותקנת
+                // fallback - פותח כל עורך זמין
+                try {
+                    Intent fallbackIntent = new Intent(Intent.ACTION_EDIT);
+                    fallbackIntent.setDataAndType(imageUri, "image/*");
+                    fallbackIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    context.startActivity(Intent.createChooser(fallbackIntent, "ערוך תמונה"));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(context, "לא נמצאה אפליקציית עריכה מתאימה", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
     }
 
     @Override
@@ -98,7 +122,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
             super(itemView);
             imageView = itemView.findViewById(R.id.imageItem);
             btnDelete = itemView.findViewById(R.id.btnDeleteItem);
-            btnEdit = itemView.findViewById(R.id.btnEditItem); // מחובר לכפתור עריכה ב-XML
+            btnEdit = itemView.findViewById(R.id.btnEditItem);
         }
     }
 }

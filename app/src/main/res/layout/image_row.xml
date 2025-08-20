@@ -1,0 +1,49 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:layout_margin="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@drawable/input_background"
+        app:shapeAppearanceOverlay="@style/RoundedCornersImage" />
+
+    <!-- קונטיינר לכפתורים בפינה -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top|end"
+        android:layout_margin="4dp"
+        android:spacing="8dp">
+
+        <ImageButton
+            android:id="@+id/btnEditItem"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/fancy_edittext"
+            android:src="@drawable/ic_edit"
+            android:contentDescription="ערוך תמונה"
+            android:padding="8dp"
+            android:elevation="8dp"
+            android:layout_marginEnd="3dp"/>
+        <ImageButton
+            android:id="@+id/btnDeleteItem"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/fancy_edittext"
+            android:src="@drawable/ic_close_white"
+            android:contentDescription="מחק תמונה"
+            android:padding="8dp"
+            android:elevation="8dp"
+            android:layout_marginEnd="6dp"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>
