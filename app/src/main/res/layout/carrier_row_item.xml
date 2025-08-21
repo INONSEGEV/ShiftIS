@@ -1,111 +1,53 @@
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:background="@drawable/item_background"
+    android:padding="16dp"
+    android:elevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/positionNumber"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_background"
-        android:orientation="horizontal">
+        android:text="1"
+        android:textSize="14sp"
+        android:textColor="#CCCCCC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/txtSubTopic"
+        android:layout_marginEnd="8dp"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginHorizontal="5dp"
-            android:elevation="2dp">
+    <TextView
+        android:id="@+id/txtSubTopic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="SubTopic"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintStart_toEndOf="@id/positionNumber"
+        app:layout_constraintEnd_toStartOf="@id/menuButton"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="4dp"
 
-            <TextView
-                android:id="@+id/positionNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="14sp"
-                android:textColor="#CCCCCC"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/txtRemark"
-                android:layout_marginEnd="8dp"/>
+        />
 
-            <TextView
-                android:id="@+id/txtCarrier"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Carrier"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/positionNumber"
-                app:layout_constraintEnd_toStartOf="@id/menuButton"
-                android:layout_marginStart="10dp"/>
+    <ImageButton
+        android:id="@+id/menuButton"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:src="@drawable/baseline_more_horiz_24"
+        android:contentDescription="Menu"
+        android:scaleType="centerInside"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:id="@+id/txtSubTopic"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="SubTopic"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:layout_constraintTop_toBottomOf="@id/txtCarrier"
-                app:layout_constraintStart_toStartOf="@id/txtCarrier"
-                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:id="@+id/txtDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:layout_constraintTop_toBottomOf="@id/txtSubTopic"
-                app:layout_constraintStart_toStartOf="@id/txtCarrier"
-                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
-                android:layout_marginTop="4dp"/>
-
-            <TextView
-                android:id="@+id/txtRemark"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Remark"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-medium"
-                android:ellipsize="end"
-                android:maxLines="1"
-                app:layout_constraintTop_toBottomOf="@id/txtDescription"
-                app:layout_constraintStart_toStartOf="@id/txtCarrier"
-                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
-                android:layout_marginTop="4dp"/>
-
-            <ImageButton
-                android:id="@+id/menuButton"
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                android:src="@drawable/baseline_more_horiz_24"
-                android:contentDescription="Menu"
-                android:scaleType="centerInside"
-                style="?android:attr/borderlessButtonStyle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

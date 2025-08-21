@@ -30,7 +30,6 @@ public class Problems extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<carrierItem> items;
 
-    // Launchers חדשים
     private ActivityResultLauncher<Intent> addCarrierLauncher;
     private ActivityResultLauncher<Intent> editLauncher;
     private ActivityResultLauncher<Intent> newProblemLauncher;
@@ -58,7 +57,7 @@ public class Problems extends Fragment {
 
         setupLaunchers();
 
-        // גרירה
+        // גרירה של CarrierItems ראשיים
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
@@ -132,8 +131,19 @@ public class Problems extends Fragment {
 
                         CarrierRowItem newItem = new CarrierRowItem(carrier, subTopic, description, remark);
 
-                        if (parentPosition != -1 && parentPosition < items.size()) {
-                            adapter.addItemToInner(parentPosition, newItem);
+                        carrierItem existingCarrier = null;
+                        int index = -1;
+                        for (int i = 0; i < items.size(); i++) {
+                            if (items.get(i).getCarrierName().equals(carrier)) {
+                                existingCarrier = items.get(i);
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        if (existingCarrier != null) {
+                            existingCarrier.getInnerItems().add(newItem);
+                            adapter.notifyItemChanged(index);
                         } else {
                             carrierItem newCarrier = new carrierItem(carrier);
                             newCarrier.getInnerItems().add(newItem);
