@@ -16,14 +16,54 @@ public class CarrierRowItem {
     private ArrayList<RecommendationsItem> recommendations;
     private ArrayList<Uri> images;
 
-    public CarrierRowItem(String carrier, String subTopic) {
+    public CarrierRowItem(String carrier, String subTopic,String description, String remark) {
         this.carrier = carrier;
         this.subTopic = subTopic;
-        this.description = "";
-        this.remark = "";
+        this.description = description;
+        this.remark = remark;
         this.standard = new ArrayList<>();
         this.recommendations = new ArrayList<>();
         this.images = new ArrayList<>();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public ArrayList<standardItem> getStandard() {
+        return standard;
+    }
+
+    public void setStandard(ArrayList<standardItem> standard) {
+        this.standard = standard;
+    }
+
+    public ArrayList<RecommendationsItem> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(ArrayList<RecommendationsItem> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public ArrayList<Uri> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<Uri> images) {
+        this.images = images;
     }
 
     public String getCarrier() { return carrier; }

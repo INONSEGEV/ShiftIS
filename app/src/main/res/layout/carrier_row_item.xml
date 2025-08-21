@@ -20,7 +20,6 @@
             android:layout_marginHorizontal="5dp"
             android:elevation="2dp">
 
-            <!-- מספר מיקום -->
             <TextView
                 android:id="@+id/positionNumber"
                 android:layout_width="wrap_content"
@@ -29,28 +28,70 @@
                 android:textSize="14sp"
                 android:textColor="#CCCCCC"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/subTopicText"
-                app:layout_constraintBottom_toBottomOf="@id/subTopicText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/txtRemark"
                 android:layout_marginEnd="8dp"/>
 
-            <!-- טקסט ראשי -->
             <TextView
-                android:layout_marginStart="10dp"
-                android:id="@+id/subTopicText"
+                android:id="@+id/txtCarrier"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
-                android:maxLines="1"
-                android:text="New"
+                android:text="Carrier"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/menuButton"
+                android:fontFamily="sans-serif-medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/positionNumber"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintEnd_toStartOf="@id/menuButton"
+                android:layout_marginStart="10dp"/>
 
-            <!-- כפתור תפריט Popup -->
+            <TextView
+                android:id="@+id/txtSubTopic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SubTopic"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/txtCarrier"
+                app:layout_constraintStart_toStartOf="@id/txtCarrier"
+                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/txtSubTopic"
+                app:layout_constraintStart_toStartOf="@id/txtCarrier"
+                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/txtRemark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Remark"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/txtDescription"
+                app:layout_constraintStart_toStartOf="@id/txtCarrier"
+                app:layout_constraintEnd_toEndOf="@id/txtCarrier"
+                android:layout_marginTop="4dp"/>
+
             <ImageButton
                 android:id="@+id/menuButton"
                 android:layout_width="37dp"

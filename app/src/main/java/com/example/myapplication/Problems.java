@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,11 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.myapplication.carrier.AddCreditor;
-import com.example.myapplication.carrier.EditCarrier;
 import com.example.myapplication.carrier.carrierAdapter;
 import com.example.myapplication.carrier.carrierItem;
+import com.example.myapplication.CarrierRow.CarrierRowItem;
+import com.example.myapplication.New_problem;
 
 import java.util.ArrayList;
 
@@ -29,100 +30,123 @@ public class Problems extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<carrierItem> items;
 
-    public static final int ADD_CARRIER_REQUEST = 1;
-    public static final int EDIT_ITEM_REQUEST = 2;
+    // Launchers חדשים
+    private ActivityResultLauncher<Intent> addCarrierLauncher;
+    private ActivityResultLauncher<Intent> editLauncher;
+    private ActivityResultLauncher<Intent> newProblemLauncher;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_add_problems, container, false);
 
         Button addButton = view.findViewById(R.id.addButtonCarrier);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        Button newProblemButton = view.findViewById(R.id.A);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
         items = new ArrayList<>();
 
-        adapter = new carrierAdapter(requireContext(), items, (position, item) -> {
-            Intent intent = new Intent(getActivity(), EditCarrier.class);
-            intent.putExtra("carrier", item.getCarrier());
-            intent.putExtra("position", position);
-            startActivityForResult(intent, EDIT_ITEM_REQUEST);
+        adapter = new carrierAdapter(this, items, position -> {
+            Intent intent = new Intent(requireActivity(), New_problem.class);
+            intent.putExtra("parentPosition", position);
+            newProblemLauncher.launch(intent);
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
-        // ------------------------
-        // ItemTouchHelper לגרירה
-        // ------------------------
+        setupLaunchers();
+
+        // גרירה
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
-
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView,
-                                  @NonNull RecyclerView.ViewHolder viewHolder,
+            public boolean onMove(@NonNull RecyclerView rv, @NonNull RecyclerView.ViewHolder vh,
                                   @NonNull RecyclerView.ViewHolder target) {
-                int fromPos = viewHolder.getAdapterPosition();
-                int toPos = target.getAdapterPosition();
-
-                // ✅ קריאה לפונקציה של Adapter שמעדכנת גם את המספרים
-                adapter.moveItem(fromPos, toPos);
+                adapter.moveItem(vh.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                // לא עושים כלום
-            }
-
-            @Override
-            public boolean isLongPressDragEnabled() {
-                return true;
-            }
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {}
         };
-
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
 
-        // ------------------------
-        // כפתור הוספה
-        // ------------------------
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), AddCreditor.class);
-            startActivityForResult(intent, ADD_CARRIER_REQUEST);
+            addCarrierLauncher.launch(intent);
         });
 
-        Button A = view.findViewById(R.id.A);
-        A.setOnClickListener(v -> {
+        newProblemButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), New_problem.class);
-            startActivity(intent);
+            newProblemLauncher.launch(intent);
         });
 
         return view;
     }
 
+    private void setupLaunchers() {
+        // Add Carrier
+        addCarrierLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        String carrierName = result.getData().getStringExtra("carrier");
+                        if (carrierName != null) {
+                            carrierItem newItem = new carrierItem(carrierName);
+                            items.add(newItem);
+                            adapter.notifyItemInserted(items.size() - 1);
+                        }
+                    }
+                }
+        );
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK || data == null) return;
+        // Edit Carrier
+        editLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        int position = result.getData().getIntExtra("position", -1);
+                        String newCarrierName = result.getData().getStringExtra("newCarrier");
+                        if (position != -1 && newCarrierName != null) {
+                            carrierItem item = items.get(position);
+                            item.setCarrierName(newCarrierName);
+                            adapter.notifyItemChanged(position);
+                        }
+                    }
+                }
+        );
 
-        if (requestCode == ADD_CARRIER_REQUEST) {
-            String carrier = data.getStringExtra("carrier");
-            carrierItem newItem = new carrierItem(carrier);
-            items.add(newItem);
-            adapter.notifyItemInserted(items.size() - 1);
-        }
+        // New Problem
+        newProblemLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Intent data = result.getData();
+                        int parentPosition = data.getIntExtra("parentPosition", -1);
+                        String carrier = data.getStringExtra("carrier");
+                        String subTopic = data.getStringExtra("subTopic");
+                        String description = data.getStringExtra("description");
+                        String remark = data.getStringExtra("remark");
 
-        if (requestCode == EDIT_ITEM_REQUEST) {
-            int position = data.getIntExtra("position", -1);
-            String carrier = data.getStringExtra("carrier");
-            if (position != -1) {
-                carrierItem updatedItem = items.get(position);
-                updatedItem.setCarrier(carrier);
-                adapter.notifyItemChanged(position);
-            }
-        }
+                        CarrierRowItem newItem = new CarrierRowItem(carrier, subTopic, description, remark);
+
+                        if (parentPosition != -1 && parentPosition < items.size()) {
+                            adapter.addItemToInner(parentPosition, newItem);
+                        } else {
+                            carrierItem newCarrier = new carrierItem(carrier);
+                            newCarrier.getInnerItems().add(newItem);
+                            items.add(newCarrier);
+                            adapter.notifyItemInserted(items.size() - 1);
+                        }
+                    }
+                }
+        );
+    }
+
+    // פונקציה ציבורית שנקראת מה-adapter כדי לערוך Carrier
+    public void launchEditCarrier(Intent intent) {
+        editLauncher.launch(intent);
     }
 }

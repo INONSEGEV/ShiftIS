@@ -1,6 +1,7 @@
 package com.example.myapplication.carrier;
 
-import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,66 +15,67 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.CarrierRow.CarrierRowAdapter;
 import com.example.myapplication.CarrierRow.CarrierRowItem;
 import com.example.myapplication.R;
+import com.example.myapplication.Problems;
+import com.example.myapplication.carrier.EditCarrier;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.function.Consumer;
 
-public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ItemViewHolder> {
+public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHolder> {
 
-    public interface OnItemEditListener {
-        void onEdit(int position, carrierItem item);
-    }
+    private final Problems fragment; // שמירת reference ל-Fragment
+    private final ArrayList<carrierItem> items;
+    private final Consumer<Integer> onAddNewItemClick;
 
-    private final Context context;
-    private final List<carrierItem> items;
-    private final OnItemEditListener listener;
-
-    public carrierAdapter(Context context, List<carrierItem> items, OnItemEditListener listener) {
-        this.context = context;
+    public carrierAdapter(Problems fragment, ArrayList<carrierItem> items, Consumer<Integer> onAddNewItemClick) {
+        this.fragment = fragment;
         this.items = items;
-        this.listener = listener;
+        this.onAddNewItemClick = onAddNewItemClick;
     }
 
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.carrier_row, parent, false);
-        return new ItemViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carrier_row, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        carrierItem carrier = items.get(position);
-        holder.carrierName.setText(carrier.getCarrier());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        carrierItem item = items.get(position);
+        holder.carrier.setText(item.getCarrierName());
 
-        // RecyclerView פנימי
-        if (holder.innerAdapter == null) {
-            holder.innerAdapter = new CarrierRowAdapter(context, carrier.getItems());
-            holder.recyclerViewInner.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            holder.recyclerViewInner.setAdapter(holder.innerAdapter);
-            holder.recyclerViewInner.setNestedScrollingEnabled(false); // חשוב
+        // Inner RecyclerView
+        CarrierRowAdapter innerAdapter = new CarrierRowAdapter(item.getInnerItems());
+        holder.recyclerViewInner.setLayoutManager(new LinearLayoutManager(fragment.requireContext()));
+        holder.recyclerViewInner.setAdapter(innerAdapter);
+
+        // כפתור + לשורה זו
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.btnAdd.setOnClickListener(v -> onAddNewItemClick.accept(position));
         }
 
-        // כפתור הוספה
-        holder.addItemBtn.setOnClickListener(v -> {
-            CarrierRowItem newItem = new CarrierRowItem(carrier.getCarrier(), "Subtopic " + (carrier.getItems().size() + 1));
-            carrier.addItem(newItem);
-            holder.innerAdapter.addItem(newItem);
-        });
-
-        // כפתור מחיקה
-        holder.deleteCarrierBtn.setOnClickListener(v -> {
+        // מחיקה
+        holder.deleteButton.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
-            if (pos >= 0 && pos < items.size()) {
+            if (pos != RecyclerView.NO_POSITION) {
                 items.remove(pos);
                 notifyItemRemoved(pos);
-                notifyItemRangeChanged(pos, items.size() - pos);
+                notifyItemRangeChanged(pos, items.size());
             }
         });
 
-        // לחיצה לעריכה
-        holder.carrierName.setOnClickListener(v -> {
-            if (listener != null) listener.onEdit(holder.getAdapterPosition(), carrier);
+        // עריכה
+        holder.btnEdit.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (pos != RecyclerView.NO_POSITION) {
+                Intent intent = new Intent(fragment.requireContext(), EditCarrier.class);
+                intent.putExtra("carrier", item.getCarrierName());
+                intent.putExtra("position", pos);
+
+                fragment.launchEditCarrier(intent); // שימוש ב-Activity Result API דרך Fragment
+            }
         });
     }
 
@@ -82,30 +84,33 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ItemView
         return items.size();
     }
 
-    public void moveItem(int fromPosition, int toPosition) {
-        if (fromPosition < items.size() && toPosition < items.size()) {
-            Collections.swap(items, fromPosition, toPosition);
-            notifyItemMoved(fromPosition, toPosition);
-            int start = Math.min(fromPosition, toPosition);
-            int end = Math.max(fromPosition, toPosition);
-            notifyItemRangeChanged(start, end - start + 1);
-        }
+    public void addItemToInner(int parentPosition, CarrierRowItem newItem) {
+        if (parentPosition < 0 || parentPosition >= items.size()) return;
+        carrierItem parent = items.get(parentPosition);
+        parent.getInnerItems().add(newItem);
+        notifyItemChanged(parentPosition);
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView carrierName, positionNumber;
-        RecyclerView recyclerViewInner;
-        ImageButton addItemBtn, deleteCarrierBtn;
-        CarrierRowAdapter innerAdapter;
+    public void moveItem(int fromPos, int toPos) {
+        if (fromPos < 0 || toPos < 0 || fromPos >= items.size() || toPos >= items.size()) return;
+        Collections.swap(items, fromPos, toPos);
+        notifyItemMoved(fromPos, toPos);
+    }
 
-        public ItemViewHolder(@NonNull View itemView) {
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView carrier;
+        RecyclerView recyclerViewInner;
+        ImageButton btnAdd;
+        ImageButton btnEdit;
+        ImageButton deleteButton;
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            carrierName = itemView.findViewById(R.id.textView);
-            positionNumber = itemView.findViewById(R.id.positionNumber);
-            recyclerViewInner = itemView.findViewById(R.id.recyclerViewRecommendations);
-            addItemBtn = itemView.findViewById(R.id.adButton);
-            deleteCarrierBtn = itemView.findViewById(R.id.deleteButton);
-            innerAdapter = null;
+            carrier = itemView.findViewById(R.id.textView);
+            recyclerViewInner = itemView.findViewById(R.id.recyclerViewInner);
+            btnAdd = itemView.findViewById(R.id.addButton);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
 }
