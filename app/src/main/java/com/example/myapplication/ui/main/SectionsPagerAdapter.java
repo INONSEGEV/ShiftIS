@@ -30,7 +30,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: return "על הבדיקה"; // עמוד 1
             case 1: return "על המזמין";
-            case 2: return "תוצאות";
+            case 2: return "ממצאים";
         }
         return null;
     }
