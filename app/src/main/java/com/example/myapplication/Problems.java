@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import com.example.myapplication.Recommendations.RecommendationsItem;
 import com.example.myapplication.carrier.AddCreditor;
 import com.example.myapplication.carrier.carrierAdapter;
 import com.example.myapplication.carrier.carrierItem;
 import com.example.myapplication.CarrierRow.CarrierRowItem;
 import com.example.myapplication.New_problem;
+import com.example.myapplication.standard.standardItem;
 
 import java.util.ArrayList;
 
@@ -128,8 +131,12 @@ public class Problems extends Fragment {
                         String subTopic = data.getStringExtra("subTopic");
                         String description = data.getStringExtra("description");
                         String remark = data.getStringExtra("remark");
+                        String date = data.getStringExtra("date");
+                        ArrayList<Uri> selectedImages = data.getParcelableArrayListExtra("selectedImages");
+                        ArrayList<standardItem> standardItems = data.getParcelableArrayListExtra("standardItems");
+                        ArrayList<RecommendationsItem> recommendationsItems = data.getParcelableArrayListExtra("recommendationsItems");
 
-                        CarrierRowItem newItem = new CarrierRowItem(carrier, subTopic, description, remark);
+                        CarrierRowItem newItem = new CarrierRowItem(carrier, subTopic, description, remark, date, standardItems, recommendationsItems, selectedImages);
 
                         carrierItem existingCarrier = null;
                         int index = -1;

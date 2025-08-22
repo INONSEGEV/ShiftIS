@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.CarrierRow.CarrierRowItem;
 import com.example.myapplication.Recommendations.AddRecommendations;
 import com.example.myapplication.Recommendations.RecommendationsAdapter;
 import com.example.myapplication.Recommendations.RecommendationsItem;
@@ -69,9 +68,7 @@ public class New_problem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_problem);
 
-        // ----------------------------
-        // Init views
-        // ----------------------------
+        // ---------------------------- Init views ----------------------------
         carrierEditText = findViewById(R.id.carrierEditText);
         subTopicEditText = findViewById(R.id.SubTopicEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
@@ -86,9 +83,7 @@ public class New_problem extends AppCompatActivity {
         btnRecommendationsItem = findViewById(R.id.btnRecommendationsItem);
         fab = findViewById(R.id.fab);
 
-        // ----------------------------
-        // FAB שמחזיר את הנתונים
-        // ----------------------------
+        // ---------------------------- FAB שמחזיר את הנתונים ----------------------------
         fab.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
             resultIntent.putExtra("parentPosition", currentParentPosition);
@@ -96,13 +91,15 @@ public class New_problem extends AppCompatActivity {
             resultIntent.putExtra("subTopic", subTopicEditText.getText().toString());
             resultIntent.putExtra("description", descriptionEditText.getText().toString());
             resultIntent.putExtra("remark", remarkEditText.getText().toString());
+            resultIntent.putExtra("date", btnPickDate.getText().toString());
+            resultIntent.putParcelableArrayListExtra("selectedImages", selectedImages);
+            resultIntent.putParcelableArrayListExtra("standardItems", items);
+            resultIntent.putParcelableArrayListExtra("recommendationsItems", itemsRecommendations);
             setResult(RESULT_OK, resultIntent);
             finish();
         });
 
-        // ----------------------------
-        // AutoCompleteTextViews
-        // ----------------------------
+        // ---------------------------- AutoCompleteTextViews ----------------------------
         carrierAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, carrierOptions);
         carrierEditText.setAdapter(carrierAdapter);
         carrierEditText.setOnClickListener(v -> carrierEditText.showDropDown());
@@ -112,9 +109,7 @@ public class New_problem extends AppCompatActivity {
         descriptionEditText.setAdapter(descriptionAdapter);
         descriptionEditText.setOnClickListener(v -> descriptionEditText.showDropDown());
 
-        // ----------------------------
-        // RecyclerView סטנדרטים
-        // ----------------------------
+        // ---------------------------- RecyclerView סטנדרטים ----------------------------
         items = new ArrayList<>();
         adapter = new standardAdapter(this, items);
         recyclerViewStandard.setLayoutManager(new LinearLayoutManager(this));
@@ -142,9 +137,7 @@ public class New_problem extends AppCompatActivity {
             startActivityForResult(intent, ADD_STANDARD_REQUEST);
         });
 
-        // ----------------------------
-        // RecyclerView המלצות
-        // ----------------------------
+        // ---------------------------- RecyclerView המלצות ----------------------------
         itemsRecommendations = new ArrayList<>();
         adapterRecommendations = new RecommendationsAdapter(this, itemsRecommendations);
         recyclerViewRecommendations.setLayoutManager(new LinearLayoutManager(this));
@@ -156,17 +149,13 @@ public class New_problem extends AppCompatActivity {
             startActivityForResult(intent, ADD_RECOMMENDATION_REQUEST);
         });
 
-        // ----------------------------
-        // RecyclerView תמונות
-        // ----------------------------
+        // ---------------------------- RecyclerView תמונות ----------------------------
         imagesAdapter = new ImagesAdapter(this, selectedImages);
         recyclerViewImages.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewImages.setAdapter(imagesAdapter);
         updateRecyclerViewImagesVisibility();
 
-        // ----------------------------
-        // Pickers
-        // ----------------------------
+        // ---------------------------- Pickers ----------------------------
         btnPickFromGallery.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
@@ -189,9 +178,7 @@ public class New_problem extends AppCompatActivity {
             ).show();
         });
 
-        // ----------------------------
-        // ActivityResultLaunchers
-        // ----------------------------
+        // ---------------------------- ActivityResultLaunchers ----------------------------
         galleryLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 if (result.getData().getClipData() != null) {
@@ -220,6 +207,38 @@ public class New_problem extends AppCompatActivity {
                 }
             }
         });
+
+        // ---------------------------- מצב עריכה ----------------------------
+        if (getIntent() != null && getIntent().hasExtra("carrier")) {
+            currentParentPosition = getIntent().getIntExtra("parentPosition", -1);
+
+            carrierEditText.setText(getIntent().getStringExtra("carrier"));
+            subTopicEditText.setText(getIntent().getStringExtra("subTopic"));
+            descriptionEditText.setText(getIntent().getStringExtra("description"));
+            remarkEditText.setText(getIntent().getStringExtra("remark"));
+            btnPickDate.setText(getIntent().getStringExtra("date"));
+
+            ArrayList<Uri> incomingImages = getIntent().getParcelableArrayListExtra("selectedImages");
+            if (incomingImages != null) {
+                selectedImages.addAll(incomingImages);
+                imagesAdapter.notifyDataSetChanged();
+                updateRecyclerViewImagesVisibility();
+            }
+
+            ArrayList<standardItem> incomingStandards = getIntent().getParcelableArrayListExtra("standardItems");
+            if (incomingStandards != null) {
+                items.addAll(incomingStandards);
+                adapter.notifyDataSetChanged();
+                updateRecyclerViewVisibility();
+            }
+
+            ArrayList<RecommendationsItem> incomingRecommendations = getIntent().getParcelableArrayListExtra("recommendationsItems");
+            if (incomingRecommendations != null) {
+                itemsRecommendations.addAll(incomingRecommendations);
+                adapterRecommendations.notifyDataSetChanged();
+                updateRecyclerViewRecommendationsVisibility();
+            }
+        }
     }
 
     @Override

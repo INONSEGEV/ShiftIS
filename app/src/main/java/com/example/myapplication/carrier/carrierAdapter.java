@@ -47,7 +47,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
 
         // אתחול Inner RecyclerView
         if (holder.innerAdapter == null) {
-            holder.innerAdapter = new CarrierRowAdapter(item.getInnerItems());
+            holder.innerAdapter = new CarrierRowAdapter(item.getInnerItems(), fragment);
             holder.recyclerViewInner.setLayoutManager(new LinearLayoutManager(fragment.requireContext()));
             holder.recyclerViewInner.setAdapter(holder.innerAdapter);
 
@@ -120,7 +120,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         RecyclerView recyclerViewInner;
         ImageButton btnAdd, btnEdit, deleteButton;
         CarrierRowAdapter innerAdapter;
-
+  
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             carrier = itemView.findViewById(R.id.textView);
