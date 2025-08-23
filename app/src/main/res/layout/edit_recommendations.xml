@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="עידכון המלצת מחיר"
+                    android:text="@string/price_recommendation_update"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff"
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="תאור"
+                    android:text="@string/description"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="כמות"
+                    android:text="@string/amount"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מחיר ליחידה"
+                    android:text="@string/price_per_unit"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="סוג יחידה"
+                    android:text="@string/unit_type"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <Spinner
@@ -93,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מחיר סך הכל"
+                    android:text="@string/total_price"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -120,9 +120,10 @@
             android:id="@+id/btnSaveEdit"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:text="עדכן"
+            android:text="@string/update"
             android:background="@drawable/button_background"
             android:textColor="#ffffff"
+            android:textAllCaps="false"
             android:layout_marginBottom="12dp"/>
     </LinearLayout>
 </ScrollView>

@@ -3,9 +3,12 @@ package com.example.myapplication;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.example.myapplication.databinding.ActivityNewProjectBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class NewProject extends AppCompatActivity {
 
@@ -55,7 +59,16 @@ public class NewProject extends AppCompatActivity {
 
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
-        viewPager.setRotationY(180f);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL) {
+                viewPager.setRotationY(180f);
+            } else {
+                viewPager.setRotationY(0f); // או תשתמש בערך ברירת מחדל
+            }
+        } else {
+            // למכשירים ישנים יותר, אפשר פשוט לא לעשות כלום או להניח LTR
+            viewPager.setRotationY(0f);
+        }
 
         // FAB – פעולה מותאמת אישית
         binding.fab.setOnClickListener(view ->

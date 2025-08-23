@@ -194,7 +194,7 @@
                 android:id="@+id/logo_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="בדק בית"
+                android:text="@string/upkeep"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1"
@@ -216,13 +216,25 @@
             <TextView
                 android:id="@+id/logo_subtitle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="יצירת דו&quot;ח"
-                android:textSize="16sp"
-                android:textColor="#FFFFFF"
+                android:layout_height="18dp"
                 android:alpha="0.7"
+                android:fontFamily="sans-serif"
                 android:letterSpacing="0.05"
-                android:fontFamily="sans-serif" />
+                android:text="@string/create_a_report"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/By"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:alpha="0.7"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:letterSpacing="0.05"
+                android:text="Shift Cttl IS"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp" />
 
         </LinearLayout>
 

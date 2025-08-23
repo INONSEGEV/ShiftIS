@@ -45,6 +45,10 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         carrierItem item = items.get(position);
         holder.carrier.setText(item.getCarrierName());
 
+        // מספר שורה מעודכן
+        int rowNumber = position + 1;
+        holder.positionNumber.setText(""+rowNumber);
+
         // אתחול Inner RecyclerView
         if (holder.innerAdapter == null) {
             holder.innerAdapter = new CarrierRowAdapter(item.getInnerItems(), fragment);
@@ -90,6 +94,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
             if (pos != RecyclerView.NO_POSITION) {
                 items.remove(pos);
                 notifyItemRemoved(pos);
+                notifyItemRangeChanged(pos, items.size()); // עדכון מספרי שורות
             }
         });
     }
@@ -104,6 +109,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         carrierItem movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
         notifyItemMoved(fromPosition, toPosition);
+        notifyItemRangeChanged(Math.min(fromPosition, toPosition), items.size()); // עדכון מספרי שורות
     }
 
     // פונקציה שמסתירה/מציגה את ה-RecyclerView הפנימי
@@ -116,14 +122,15 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView carrier;
+        TextView carrier, positionNumber;
         RecyclerView recyclerViewInner;
         ImageButton btnAdd, btnEdit, deleteButton;
         CarrierRowAdapter innerAdapter;
-  
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             carrier = itemView.findViewById(R.id.textView);
+            positionNumber = itemView.findViewById(R.id.positionNumber);
             recyclerViewInner = itemView.findViewById(R.id.recyclerViewInner);
             btnAdd = itemView.findViewById(R.id.addButton);
             btnEdit = itemView.findViewById(R.id.btnEdit);

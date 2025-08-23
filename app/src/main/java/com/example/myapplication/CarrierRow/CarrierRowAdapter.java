@@ -1,9 +1,7 @@
-// CarrierRowAdapter.java
 package com.example.myapplication.CarrierRow;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,16 +40,16 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int parentPosition) {
-        CarrierRowItem item = innerItems.get(parentPosition);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CarrierRowItem item = innerItems.get(position);
 
         holder.txtSubTopic.setText(item.getSubTopic());
+        holder.positionNumber.setText("" + (position + 1)); // מספר השורה
 
+        // כפתור עריכה
         if (holder.btnEdit != null) {
             holder.btnEdit.setOnClickListener(v -> {
-                // מעבר ל-New_problem עם Intent
                 Intent intent = new Intent(fragment.getContext(), New_problem.class);
-
                 intent.putExtra("carrier", item.getCarrier());
                 intent.putExtra("subTopic", item.getSubTopic());
                 intent.putExtra("description", item.getDescription());
@@ -60,7 +58,7 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
                 intent.putParcelableArrayListExtra("selectedImages", item.getImages());
                 intent.putParcelableArrayListExtra("standardItems", item.getStandard());
                 intent.putParcelableArrayListExtra("recommendationsItems", item.getRecommendations());
-                intent.putExtra("parentPosition", parentPosition);
+                intent.putExtra("parentPosition", position);
 
                 if (fragment instanceof Problems) {
                     ((Problems) fragment).startActivityForResult(intent, 4);
@@ -70,11 +68,12 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
             });
         }
 
+        // כפתור מחיקה
         if (holder.btnDelete != null) {
             holder.btnDelete.setOnClickListener(v -> {
-                innerItems.remove(parentPosition);
-                notifyItemRemoved(parentPosition);
-                notifyItemRangeChanged(parentPosition, innerItems.size());
+                innerItems.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, innerItems.size()); // עדכון מספרי שורות מתחת
             });
         }
     }
@@ -94,13 +93,16 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
         notifyDataSetChanged();
     }
 
-    // הזזת פריט בתוך ה-RecyclerView
+    // הזזת פריט בתוך ה-RecyclerView הפנימי
     public void moveItem(int fromPosition, int toPosition) {
         if (fromPosition < 0 || toPosition < 0 || fromPosition >= innerItems.size() || toPosition >= innerItems.size())
             return;
 
         Collections.swap(innerItems, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
+        // עדכון מספרי שורות של כל הפריטים שנפגעו
+        notifyItemRangeChanged(Math.min(fromPosition, toPosition),
+                Math.abs(fromPosition - toPosition) + 1);
     }
 
     // הפעלת ItemTouchHelper ל-Drag & Drop
@@ -124,24 +126,26 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
 
             @Override
             public boolean isLongPressDragEnabled() {
-                return true; // מאפשר גרירה בלחיצה ארוכה
+                return true;
             }
         };
-
         return new ItemTouchHelper(callback);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtSubTopic;
+        TextView positionNumber; // מספר השורה
         ImageButton btnEdit, btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtSubTopic = itemView.findViewById(R.id.txtSubTopic);
+            positionNumber = itemView.findViewById(R.id.positionNumber);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.deleteButton);
         }
     }
+
     public void updateItem(int position, CarrierRowItem updatedItem) {
         if (position < 0 || position >= innerItems.size()) return;
         innerItems.set(position, updatedItem);

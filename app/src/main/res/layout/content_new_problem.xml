@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ממצא חדש"
+                    android:text="@string/new_find"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff"
@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="נושא"
+                    android:text="@string/carrier"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
 
@@ -58,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="תת נושא"
+                    android:text="@string/sub_topic"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="תאור"
+                    android:text="@string/description"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <AutoCompleteTextView
@@ -88,7 +88,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="הערה"
+                    android:text="@string/remark"
+
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -105,7 +106,8 @@
                     android:id="@+id/btnStandardItem"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:text="הוספת ניגוד תקן"
+                    android:text="@string/adding_standard_contrast"
+                    android:textAllCaps="false"
                     android:background="@drawable/button_background"
                     android:textColor="#ffffff"
                     android:layout_marginBottom="12dp"/>
@@ -123,9 +125,10 @@
                     android:id="@+id/btnRecommendationsItem"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:text="הוספת המלצת מחיר"
+                    android:text="@string/add_a_price_recommendation"
                     android:background="@drawable/button_background"
                     android:textColor="#ffffff"
+                    android:textAllCaps="false"
                     android:layout_marginBottom="12dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -141,9 +144,10 @@
                     android:id="@+id/btnPickDate"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:text="בחר תאריך"
+                    android:text="@string/select_a_date"
                     android:background="@drawable/button_background"
                     android:textColor="#ffffff"
+                    android:textAllCaps="false"
                     android:layout_marginBottom="12dp"/>
 
                 <LinearLayout
@@ -159,7 +163,8 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="6dp"
-                        android:text="בחר תמונות"
+                        android:text="@string/select_images"
+                        android:textAllCaps="false"
                         android:background="@drawable/button_background"
                         android:textColor="#ffffff" />
 
@@ -169,7 +174,8 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:layout_marginStart="6dp"
-                        android:text="צלם תמונות"
+                        android:text="@string/take_pictures"
+                        android:textAllCaps="false"
                         android:background="@drawable/button_background"
                         android:textColor="#ffffff" />
                 </LinearLayout>

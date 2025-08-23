@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button singButton = findViewById(R.id.singButton);
         Button signUpButton = findViewById(R.id.signUpButton);
-        LinearLayout googleSignInBtn = findViewById(R.id.googleSignInBtn); // LinearLayout במקום Button
+        LinearLayout googleSignInBtn = findViewById(R.id.googleSignInBtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
 

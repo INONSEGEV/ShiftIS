@@ -2,7 +2,9 @@ package com.example.myapplication.ui.main;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import com.example.myapplication.databinding.FragmentScrollBinding;
 import com.example.myapplication.invitingFragment;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class PlaceholderFragment extends Fragment {
 
@@ -61,7 +64,16 @@ public class PlaceholderFragment extends Fragment {
             }
         }
 
-        root.setRotationY(180f);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL) {
+                root.setRotationY(180f);
+            } else {
+                root.setRotationY(0f); // או תשתמש בערך ברירת מחדל
+            }
+        } else {
+            // למכשירים ישנים יותר, אפשר פשוט לא לעשות כלום או להניח LTR
+            root.setRotationY(0f);
+        }
         return root;
     }
 

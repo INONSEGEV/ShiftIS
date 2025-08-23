@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Shift Cttl IS</string>
+    <string name="action_settings">הגדרות</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">פרגמנט ראשון</string>
+    <string name="second_fragment_label">פרגמנט שני</string>
+    <string name="next">הבא</string>
+
+    <string-array name="options_array">
+        <item>אפשרות 1</item>
+        <item>אפשרות 2</item>
+        <item>אפשרות 3</item>
+    </string-array>
+
+    <string name="previous">קודם</string>
+    <string name="title_activity_second">פעילות שנייה</string>
+    <string name="title_activity_menu">תפריט</string>
+    <string name="navigation_drawer_open">פתח תפריט ניווט</string>
+    <string name="navigation_drawer_close">סגור תפריט ניווט</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">כותרת ניווט</string>
+    <string name="menu_home">דף הבית</string>
+    <string name="menu_gallery">גלריה</string>
+    <string name="menu_slideshow">מצגת</string>
+    <string name="hello_blank_fragment">שלום פרגמנט ריק</string>
+    <string name="title_activity_scroll">גלילה</string>
+    <string name="tab_text_1">כרטיסייה 1</string>
+    <string name="tab_text_2">כרטיסייה 2</string>
+    <string name="title_activity_scroll_np">גלילהNP</string>
+    <string name="sin_in">התחבר</string>
+    <string name="sing_up">הירשם</string>
+    <string name="continue_with_google">התחבר עם גוגל</string>
+    <string name="upkeep">בדק בית</string>
+    <string name="create_a_report">יצירת דו\"ח</string>
+    <string name="new_find">ממצא חדש</string>
+    <string name="carrier">נושא</string>
+    <string name="sub_topic">תת נושא</string>
+    <string name="description">תואר</string>
+    <string name="remark">הערה</string>
+    <string name="adding_standard_contrast">הוספת ניגוד תקן</string>
+    <string name="add_a_price_recommendation">הוספת המלצת מחיר</string>
+    <string name="select_a_date">בחר תאריך</string>
+    <string name="select_images">בחר תמונות</string>
+    <string name="take_pictures">צלם תמונות</string>
+    <string name="about_the_test">על הבדיקה</string>
+    <string name="name_checker">שם בודק</string>
+    <string name="name_of_the_contractor">שם קבלן ביצוע</string>
+    <string name="present_at_the_time_of_the_examination">נוכחים בשעת הבדיקה</string>
+    <string name="select_a_project_image">בחר תמונת פרוייקט</string>
+    <string name="edit_topic">עריכת נושא</string>
+    <string name="subject_name">שם הנושא</string>
+    <string name="for_example_living_room">לדוגמה: סלון</string>
+    <string name="update">עדכן</string>
+    <string name="price_recommendation_update">עידכון המלצת מחיר</string>
+    <string name="amount">כמות</string>
+    <string name="price_per_unit">מחיר ליחידה</string>
+    <string name="unit_type">סוג יחידה</string>
+    <string name="total_price">מחיר סך הכל</string>
+    <string name="select_a_time">בחר שעה</string>
+</resources>
