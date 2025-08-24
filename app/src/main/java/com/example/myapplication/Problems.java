@@ -44,7 +44,6 @@ public class Problems extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_problems, container, false);
 
         Button addButton = view.findViewById(R.id.addButtonCarrier);
-        Button newProblemButton = view.findViewById(R.id.A);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         items = new ArrayList<>();
@@ -80,10 +79,7 @@ public class Problems extends Fragment {
             addCarrierLauncher.launch(intent);
         });
 
-        newProblemButton.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), New_problem.class);
-            newProblemLauncher.launch(intent);
-        });
+
 
         return view;
     }

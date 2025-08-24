@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -54,7 +55,7 @@ public class New_problem extends AppCompatActivity {
 
     private ArrayAdapter<String> carrierAdapter;
 
-    private FloatingActionButton fab;
+    private ImageButton fab;
 
     public static final int ADD_STANDARD_REQUEST = 1;
     public static final int EDIT_ITEM_REQUEST = 2;
