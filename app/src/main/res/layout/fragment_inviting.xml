@@ -41,7 +41,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="על המזמין"
+                        android:text="@string/about_the_guest"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:textColor="#ffffff"
@@ -68,7 +68,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="שם המזמין"
+                        android:text="@string/name_of_the_person_ordering"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -93,7 +93,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="שם משפחת המזמין"
+                        android:text="@string/last_name_of_the_inviter"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -118,7 +118,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="טלפון המזמין"
+                        android:text="@string/ordering_party_s_phone_number"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -143,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="אמייל"
+                        android:text="@string/email"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -168,7 +168,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="חברה"
+                        android:text="@string/company"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -193,7 +193,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="עיר"
+                        android:text="@string/city"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -216,14 +216,14 @@
 
                     <!-- רחוב -->
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="רחוב"
+                        android:layout_width="32dp"
+                        android:layout_height="19dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/street"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp" />
+                        android:textStyle="bold" />
                     <EditText
                         android:id="@+id/streetEditText"
                         android:layout_width="match_parent"
@@ -243,7 +243,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="מספר בניין"
+                        android:text="@string/building_number"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -268,7 +268,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="מספר דירה"
+                        android:text="@string/apartment_number"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -293,7 +293,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="מידע נוסף?"
+                        android:text="@string/more_information"
                         android:textColor="#e0e0e0"
                         android:textSize="16sp"
                         android:textStyle="bold"

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/gradient_background"
-        app:title="הבית"
+        app:title="@string/home"
         android:layout_marginTop="25dp"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp"/>

@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="המלצת מחיר"
+                    android:text="@string/price_recommendation"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff"
@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="תאור"
+                    android:text="@string/description"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="כמות"
+                    android:text="@string/amount"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מחיר ליחידה"
+                    android:text="@string/price_per_unit"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="סוג יחידה"
+                    android:text="@string/unit_type"
                     android:inputType="numberDecimal|numberSigned"
 
                     android:textColor="#e0e0e0"
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מחיר סך הכל"
+                    android:text="@string/total_price"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -130,8 +130,9 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
+            android:textAllCaps="false"
             android:layout_height="35dp"
-            android:text="שמור"
+            android:text="@string/save"
             android:background="@drawable/button_background"
             android:textColor="#ffffff"
             android:layout_marginBottom="12dp"/>

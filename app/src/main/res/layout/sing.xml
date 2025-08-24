@@ -29,7 +29,7 @@
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:text="התחברות למערכת"
+          android:text="@string/log_in"
           android:textSize="24sp"
           android:textStyle="bold"
           android:textColor="#ffffff"
@@ -55,7 +55,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="אימייל"
+          android:text="@string/email"
           android:textColor="#e0e0e0"
           android:textSize="16sp"
           android:textStyle="bold"
@@ -82,7 +82,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="סיסמה"
+          android:text="@string/password"
           android:textColor="#e0e0e0"
           android:textSize="16sp"
           android:textStyle="bold"
@@ -110,7 +110,7 @@
           android:id="@+id/rememberMeCheckBox"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="זכור אותי"
+          android:text="@string/remember_me"
           android:textStyle="bold"
           android:textColor="#ffffff"
           android:textSize="14sp"
@@ -129,10 +129,11 @@
           android:id="@+id/loginButton"
           android:layout_width="match_parent"
           android:layout_height="56dp"
-          android:text="התחבר"
+          android:text="@string/logIn"
           android:textColor="#ffffff"
           android:textSize="18sp"
           android:textStyle="bold"
+          android:textAllCaps="false"
           android:background="@drawable/button_background"
           android:layout_marginTop="10dp" />
 

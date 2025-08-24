@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="מספר תקן"
+                    android:text="@string/standard_number"
                     android:textColor="#e0e0e0"
                     android:textStyle="bold"/>
                 <EditText
@@ -65,9 +65,10 @@
                         android:id="@+id/btnSelectImage"
                         android:layout_width="0dp"
                         android:layout_height="35dp"
+                        android:textAllCaps="false"
                         android:layout_weight="1"
                         android:layout_marginEnd="6dp"
-                        android:text="בחר תמונות"
+                        android:text="@string/select_images"
                         android:background="@drawable/button_background"
                         android:textColor="#ffffff" />
 
@@ -77,7 +78,8 @@
                         android:layout_height="35dp"
                         android:layout_weight="1"
                         android:layout_marginStart="6dp"
-                        android:text="צלם תמונות"
+                        android:textAllCaps="false"
+                        android:text="@string/take_pictures"
                         android:background="@drawable/button_background"
                         android:textColor="#ffffff" />
                 </LinearLayout>
@@ -99,7 +101,8 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:text="עדכן"
+            android:text="@string/update"
+            android:textAllCaps="false"
             android:background="@drawable/button_background"
             android:textColor="#ffffff"
             android:layout_marginBottom="12dp"/>

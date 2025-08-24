@@ -75,7 +75,7 @@
         <EditText
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
-            android:hint="תאור התמונה"
+            android:hint="@string/image_description"
             android:layout_height="56dp"
             android:background="@drawable/input_background"
             android:textColor="#ffffff"
