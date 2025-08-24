@@ -11,7 +11,11 @@
         <item>אפשרות 2</item>
         <item>אפשרות 3</item>
     </string-array>
-
+        <string-array name="tab_titles">
+            <item>על הבדיקה</item>
+            <item>על המזמין</item>
+            <item>ממצאים</item>
+        </string-array>
     <string name="previous">קודם</string>
     <string name="title_activity_second">פעילות שנייה</string>
     <string name="title_activity_menu">תפריט</string>
@@ -84,4 +88,9 @@
     <string name="enter_email_address">הכנס כתובת אימייל</string>
     <string name="enter_password">הכנס סיסמה</string>
     <string name="approval">אישור</string>
+    <string name="settings">הגדרות</string>
+    <string name="log_out">התנתק</string>
+    <string name="findings">ממצאים</string>
+
+
 </resources>

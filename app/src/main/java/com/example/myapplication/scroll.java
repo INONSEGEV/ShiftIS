@@ -21,7 +21,7 @@ public class scroll extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Adapter + ViewPager
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this,getSupportFragmentManager());
         binding.viewPager.setAdapter(sectionsPagerAdapter);
 
         // מחבר TabLayout ל-ViewPager

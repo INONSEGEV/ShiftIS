@@ -1,37 +1,39 @@
 package com.example.myapplication.ui.main;
 
+import android.content.Context;
+import android.content.res.Resources;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.myapplication.ui.main.PlaceholderFragment;
+import com.example.myapplication.R;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    private final String[] tabTitles;
+
+    public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        // קבלת כל הכותרות כ-array
+        Resources res = context.getResources();
+        tabTitles = res.getStringArray(R.array.tab_titles);
     }
 
     @Override
     public Fragment getItem(int position) {
-        // העברת מספר העמוד ל-Fragment
-        return PlaceholderFragment.newInstance(position + 1); // 1, 2, 3
+        return PlaceholderFragment.newInstance(position + 1);
     }
 
     @Override
     public int getCount() {
-        return 3; // מספר העמודים
+        return tabTitles.length;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0: return "על הבדיקה"; // עמוד 1
-            case 1: return "על המזמין";
-            case 2: return "ממצאים";
-        }
-        return null;
+        return tabTitles[position];
     }
 }

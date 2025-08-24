@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_add"
-        android:title="שמור"
+        android:title="@string/save"
         app:showAsAction="always"/>
 
 
