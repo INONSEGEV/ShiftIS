@@ -12,10 +12,9 @@
         android:orderInCategory="100"
         android:title="הגדרות"
         android:titleCondensed="הגדרות"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="never"
         app:iconTint="@color/menu_icon_tint"
-        app:actionViewClass="androidx.appcompat.widget.ActionMenuView" />
-
+        android:visible="true" />
     <!-- פריט התנתקות עם אייקון מותאם -->
     <item
         android:id="@+id/logoutButton"
@@ -23,8 +22,9 @@
         android:orderInCategory="200"
         android:title="התנתק"
         android:titleCondensed="התנתק"
-        app:showAsAction="ifRoom|withText"
-        app:iconTint="@color/logout_icon_tint" />
+        app:showAsAction="never"
+        app:iconTint="@color/logout_icon_tint"
+        />
     <item
         android:id="@+id/NewProject"
         android:icon="@drawable/ic_add_document_modern"
@@ -32,7 +32,9 @@
         android:title="מסמך חדש"
         android:titleCondensed="חדש"
         app:showAsAction="ifRoom|withText"
-        app:iconTint="@color/accent_primary" />
+        app:iconTint="@color/accent_primary"
+        />
+
 
 
 </menu>

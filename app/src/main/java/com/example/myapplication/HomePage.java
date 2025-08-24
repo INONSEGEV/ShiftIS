@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -37,9 +39,14 @@ public class HomePage extends AppCompatActivity {
 
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (menu instanceof MenuBuilder) {
+            MenuBuilder menuBuilder = (MenuBuilder) menu;
+            menuBuilder.setOptionalIconsVisible(true);
+        }
         return true;
     }
 
@@ -62,6 +69,10 @@ public class HomePage extends AppCompatActivity {
         if(id==R.id.NewProject)
         {
             startActivity(new Intent(HomePage.this, NewProject.class));
+        }
+        if(id==R.id.action_settings)
+        {
+            startActivity(new Intent(HomePage.this, Settings.class));
         }
         return super.onOptionsItemSelected(item);
     }
