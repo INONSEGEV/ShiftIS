@@ -1,4 +1,3 @@
-// carrierAdapter.java
 package com.example.myapplication.carrier;
 
 import android.content.Intent;
@@ -16,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.CarrierRow.CarrierRowAdapter;
 import com.example.myapplication.New_problem;
-import com.example.myapplication.R;
 import com.example.myapplication.Problems;
-import com.example.myapplication.Recommendations.EditItemRecommendations;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.function.IntConsumer;
@@ -49,8 +47,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         holder.carrier.setText(item.getCarrierName());
 
         // מספר שורה מעודכן
-        int rowNumber = position + 1;
-        holder.positionNumber.setText(""+rowNumber);
+        holder.positionNumber.setText("" + (position + 1));
 
         // אתחול Inner RecyclerView
         if (holder.innerAdapter == null) {
@@ -58,24 +55,17 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
             holder.recyclerViewInner.setLayoutManager(new LinearLayoutManager(fragment.requireContext()));
             holder.recyclerViewInner.setAdapter(holder.innerAdapter);
             holder.innerAdapter.getItemTouchHelper().attachToRecyclerView(holder.recyclerViewInner);
-
-
-            // חיבור ItemTouchHelper פנימי
-            holder.innerAdapter.getItemTouchHelper().attachToRecyclerView(holder.recyclerViewInner);
         } else {
             holder.innerAdapter.updateItems(item.getInnerItems());
         }
 
-        // עדכון ה-visibility של ה-RecyclerView הפנימי
-        updateRecyclerViewInnerVisibility(holder);
+        // קבע visibility לפי המודל
+        holder.recyclerViewInner.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
 
         // לחיצה על carrier תפתח/תסגור את הפנימי
         holder.carrier.setOnClickListener(v -> {
-            if (holder.recyclerViewInner.getVisibility() == View.VISIBLE) {
-                holder.recyclerViewInner.setVisibility(View.GONE);
-            } else if (holder.innerAdapter.getItemCount() > 0) {
-                holder.recyclerViewInner.setVisibility(View.VISIBLE);
-            }
+            item.setExpanded(!item.isExpanded());
+            notifyItemChanged(position); // ריענון השורה עם הסטטוס החדש
         });
 
         // כפתור הוספת פריט
@@ -85,7 +75,6 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
                 intent.putExtra("position", position);
                 intent.putExtra("carrier", item.getCarrierName());
                 onAddNewItemClick.accept(position);
-                updateRecyclerViewInnerVisibility(holder);
             });
         }
 
@@ -96,10 +85,8 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
                 intent.putExtra("position", position);
                 intent.putExtra("carrier", item.getCarrierName());
                 ((Problems) fragment).launchEditCarrier(intent);
-
             }
         });
-
 
         // כפתור מחיקה
         holder.deleteButton.setOnClickListener(v -> {
@@ -107,7 +94,7 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
             if (pos != RecyclerView.NO_POSITION) {
                 items.remove(pos);
                 notifyItemRemoved(pos);
-                notifyItemRangeChanged(pos, items.size()); // עדכון מספרי שורות
+                notifyItemRangeChanged(pos, items.size());
             }
         });
     }
@@ -117,21 +104,11 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         return items.size();
     }
 
-    // פונקציה להזזה (Drag & Drop למשל)
     public void moveItem(int fromPosition, int toPosition) {
         carrierItem movedItem = items.remove(fromPosition);
         items.add(toPosition, movedItem);
         notifyItemMoved(fromPosition, toPosition);
-        notifyItemRangeChanged(Math.min(fromPosition, toPosition), items.size()); // עדכון מספרי שורות
-    }
-
-    // פונקציה שמסתירה/מציגה את ה-RecyclerView הפנימי
-    private void updateRecyclerViewInnerVisibility(ViewHolder holder) {
-        if (holder.innerAdapter != null && holder.innerAdapter.getItemCount() > 0) {
-            holder.recyclerViewInner.setVisibility(View.VISIBLE);
-        } else {
-            holder.recyclerViewInner.setVisibility(View.GONE);
-        }
+        notifyItemRangeChanged(Math.min(fromPosition, toPosition), items.size());
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

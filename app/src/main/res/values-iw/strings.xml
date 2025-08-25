@@ -90,6 +90,27 @@
     <string name="settings">הגדרות</string>
     <string name="log_out">התנתק</string>
     <string name="findings">ממצאים</string>
+    <string name="living_room">סלון</string>
+    <string name="kitchen">מטבח</string>
+    <string name="hallway">מזדרון</string>
+    <string name="balcony">מרפסת</string>
+    <string name="toilet">שירותים</string>
+    <string name="shower">מקלחת</string>
+    <string name="bedroom">חדר שינה</string>
+    <string name="pool">בריכה</string>
+    <string name="closet">חדר ארונות</string>
+    <string name="laundry_room">חדר כביסה</string>
+    <string name="flooring">ריצוף</string>
+    <string name="door">דלת</string>
+    <string name="window">חלון</string>
+    <string name="display_cabinet">ויטרינה</string>
+    <string name="cabinet">ארון</string>
+    <string name="lamp">מנורה</string>
+    <string name="kitchen_cabinet_doors">דלתות ארונות</string>
+    <string name="upper_cabinets">ארונות עליונים</string>
+    <string name="lower_cabinets">ארונות תחתונים</string>
+    <string name="sink">כיור</string>
+    <string name="countertop">שיש</string>
 
 
 </resources>

@@ -10,11 +10,29 @@ import java.util.ArrayList;
 
 public class carrierItem {
     private String carrierName;
+    boolean isExpanded = false; // <-- סטטוס פתוח/סגור
+
     private ArrayList<CarrierRowItem> innerItems;
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
+
+    public void setInnerItems(ArrayList<CarrierRowItem> innerItems) {
+        this.innerItems = innerItems;
+    }
 
     public carrierItem(String carrierName) {
         this.carrierName = carrierName;
         this.innerItems = new ArrayList<>();
+    }
+    public carrierItem(String carrierName, ArrayList<CarrierRowItem> innerItems) {
+        this.carrierName = carrierName;
+        this.innerItems = innerItems;
     }
 
     public void setCarrierName(String carrierName) {

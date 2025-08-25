@@ -27,12 +27,7 @@ public class scroll extends AppCompatActivity {
         // מחבר TabLayout ל-ViewPager
         binding.tabs.setupWithViewPager(binding.viewPager);
 
-        // FAB לדוגמא
-        binding.fab.setOnClickListener(v ->
-                Snackbar.make(v, "פעולה מותאמת אישית", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(binding.fab).show()
-        );
+
 
 
     }

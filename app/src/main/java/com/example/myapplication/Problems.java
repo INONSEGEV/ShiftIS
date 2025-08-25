@@ -34,10 +34,7 @@ public class Problems extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<carrierItem> items;
 
-    private ActivityResultLauncher<Intent> addCarrierLauncher;
-    private ActivityResultLauncher<Intent> editLauncher;
-    private ActivityResultLauncher<Intent> newProblemLauncher;
-    private ActivityResultLauncher<Intent> editInnerLauncher;
+    private ActivityResultLauncher<Intent> addCarrierLauncher, editLauncher, newProblemLauncher, editInnerLauncher;
 
     @Nullable
     @Override
@@ -49,6 +46,191 @@ public class Problems extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         items = new ArrayList<>();
+
+        ArrayList<CarrierRowItem> carrierRowItems = new ArrayList<>();
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.flooring),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.door),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.window),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.display_cabinet),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.cabinet),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        carrierRowItems.add(new CarrierRowItem(
+                getString(R.string.living_room),
+                getString(R.string.lamp),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+        ArrayList<CarrierRowItem> kitchenItems = new ArrayList<>();
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.flooring),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.kitchen_cabinet_doors),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.window),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.display_cabinet),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.upper_cabinets),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.lower_cabinets),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.lamp),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.sink),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+        kitchenItems.add(new CarrierRowItem(
+                getString(R.string.kitchen),
+                getString(R.string.countertop),
+                "",
+                "",
+                "",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        ));
+
+
+
+
+// אפשר להוסיף עוד כמה שורות שאתה רוצה
+
+        items.add(new carrierItem(getString(R.string.living_room), carrierRowItems));
+        items.add(new carrierItem(getString(R.string.kitchen),kitchenItems));
+        items.add(new carrierItem(getString(R.string.hallway)));
+        items.add(new carrierItem(getString(R.string.balcony)));
+        items.add(new carrierItem(getString(R.string.toilet)));
+        items.add(new carrierItem(getString(R.string.shower)));
+        items.add(new carrierItem(getString(R.string.bedroom)));
+        items.add(new carrierItem(getString(R.string.pool)));
+        items.add(new carrierItem(getString(R.string.closet)));
+        items.add(new carrierItem(getString(R.string.laundry_room)));
+
 
         adapter = new carrierAdapter(this, items, position -> {
             carrierItem carrierRow = items.get(position);

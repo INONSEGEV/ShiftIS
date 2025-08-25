@@ -39,6 +39,7 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CarrierRowItem item = innerItems.get(position);

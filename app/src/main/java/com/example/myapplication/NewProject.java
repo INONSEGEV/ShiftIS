@@ -71,13 +71,7 @@ public class NewProject extends AppCompatActivity {
             viewPager.setRotationY(0f);
         }
 
-        // FAB – פעולה מותאמת אישית
-        binding.fab.setOnClickListener(view ->
-                Snackbar.make(view, "פעולה מותאמת אישית", Snackbar.LENGTH_LONG)
-                        .setAnchorView(binding.fab)
-                        .setAction("Action", null)
-                        .show()
-        );
+
     }
 
     @Override
