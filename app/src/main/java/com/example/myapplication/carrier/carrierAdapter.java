@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.CarrierRow.CarrierRowAdapter;
+import com.example.myapplication.New_problem;
 import com.example.myapplication.R;
 import com.example.myapplication.Problems;
 import com.example.myapplication.Recommendations.EditItemRecommendations;
@@ -80,6 +81,9 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         // כפתור הוספת פריט
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.btnAdd.setOnClickListener(v -> {
+                Intent intent = new Intent(fragment.requireContext(), New_problem.class);
+                intent.putExtra("position", position);
+                intent.putExtra("carrier", item.getCarrierName());
                 onAddNewItemClick.accept(position);
                 updateRecyclerViewInnerVisibility(holder);
             });

@@ -84,6 +84,11 @@ public class New_problem extends AppCompatActivity {
         btnRecommendationsItem = findViewById(R.id.btnRecommendationsItem);
         fab = findViewById(R.id.fab);
 
+        Intent intent0 = getIntent();
+        if(intent0 != null && intent0.hasExtra("carrier")) {
+            carrierEditText.setText(intent0.getStringExtra("carrier"));
+        }
+
         // ---------------------------- FAB שמחזיר את הנתונים ----------------------------
         fab.setOnClickListener(v -> {
             Intent resultIntent = new Intent();

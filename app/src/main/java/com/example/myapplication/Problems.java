@@ -50,10 +50,15 @@ public class Problems extends Fragment {
         items = new ArrayList<>();
 
         adapter = new carrierAdapter(this, items, position -> {
+            carrierItem carrierRow = items.get(position);
+
             Intent intent = new Intent(requireActivity(), New_problem.class);
             intent.putExtra("parentPosition", position);
-            newProblemLauncher.launch(intent);
+            intent.putExtra("carrier", carrierRow.getCarrierName());
+
+            newProblemLauncher.launch(intent); // השורה היחידה שמפעילה את New_problem
         });
+
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
