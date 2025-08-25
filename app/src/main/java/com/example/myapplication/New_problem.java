@@ -25,7 +25,6 @@ import com.example.myapplication.Recommendations.RecommendationsItem;
 import com.example.myapplication.standard.AddStandard;
 import com.example.myapplication.standard.standardAdapter;
 import com.example.myapplication.standard.standardItem;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +62,7 @@ public class New_problem extends AppCompatActivity {
     public static final int EDIT_RECOMMENDATION_REQUEST = 4;
 
     private int currentParentPosition = -1;
+    private int currentInnerPosition = -1; // מיקום פריט פנימי לעריכה
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,8 @@ public class New_problem extends AppCompatActivity {
         // ---------------------------- FAB שמחזיר את הנתונים ----------------------------
         fab.setOnClickListener(v -> {
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("parentPosition", currentParentPosition);
+            resultIntent.putExtra("parentIndex", currentParentPosition); // Carrier ראשי
+            resultIntent.putExtra("innerIndex", currentInnerPosition);   // פריט פנימי
             resultIntent.putExtra("carrier", carrierEditText.getText().toString());
             resultIntent.putExtra("subTopic", subTopicEditText.getText().toString());
             resultIntent.putExtra("description", descriptionEditText.getText().toString());
@@ -125,12 +126,10 @@ public class New_problem extends AppCompatActivity {
                                   @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
-
                 Collections.swap(items, fromPosition, toPosition);
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
             }
-
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {}
@@ -214,8 +213,9 @@ public class New_problem extends AppCompatActivity {
         });
 
         // ---------------------------- מצב עריכה ----------------------------
-        if (getIntent() != null && getIntent().hasExtra("carrier")) {
-            currentParentPosition = getIntent().getIntExtra("parentPosition", -1);
+        if (getIntent() != null) {
+            currentParentPosition = getIntent().getIntExtra("parentIndex", -1);
+            currentInnerPosition = getIntent().getIntExtra("innerIndex", -1);
 
             carrierEditText.setText(getIntent().getStringExtra("carrier"));
             subTopicEditText.setText(getIntent().getStringExtra("subTopic"));
@@ -262,6 +262,21 @@ public class New_problem extends AppCompatActivity {
             updateRecyclerViewVisibility();
         }
 
+        if (requestCode == EDIT_ITEM_REQUEST) {
+            int position = data.getIntExtra("position", -1);
+            if (position != -1) {
+                String updatedStandard = data.getStringExtra("standard");
+                ArrayList<Uri> updatedImages = data.getParcelableArrayListExtra("selectedImages");
+
+                standardItem updatedItem = items.get(position);
+                updatedItem.setStandard(updatedStandard);
+                if (updatedImages != null) updatedItem.setImages(updatedImages);
+
+                adapter.notifyItemChanged(position);
+                updateRecyclerViewVisibility();
+            }
+        }
+
         if (requestCode == ADD_RECOMMENDATION_REQUEST) {
             String description = data.getStringExtra("description");
             String amount = data.getStringExtra("amount");
@@ -273,6 +288,27 @@ public class New_problem extends AppCompatActivity {
             itemsRecommendations.add(newItem);
             adapterRecommendations.notifyItemInserted(itemsRecommendations.size() - 1);
             updateRecyclerViewRecommendationsVisibility();
+        }
+
+        if (requestCode == EDIT_RECOMMENDATION_REQUEST) {
+            int position = data.getIntExtra("position1", -1);
+            if (position != -1) {
+                String description = data.getStringExtra("description");
+                String amount = data.getStringExtra("amount");
+                String unitPrice = data.getStringExtra("unitPrice");
+                String unit = data.getStringExtra("unit");
+                String totalPrice = data.getStringExtra("totalPrice");
+
+                RecommendationsItem updatedItem = itemsRecommendations.get(position);
+                updatedItem.setDescription(description);
+                updatedItem.setAmount(amount);
+                updatedItem.setUnitPrice(unitPrice);
+                updatedItem.setUnit(unit);
+                updatedItem.setTotalPrice(totalPrice);
+
+                adapterRecommendations.notifyItemChanged(position);
+                updateRecyclerViewRecommendationsVisibility();
+            }
         }
     }
 

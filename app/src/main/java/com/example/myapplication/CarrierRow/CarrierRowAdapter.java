@@ -1,6 +1,5 @@
 package com.example.myapplication.CarrierRow;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +23,18 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
 
     private ArrayList<CarrierRowItem> innerItems;
     private Fragment fragment;
+    private int parentIndex; // השורה של ה-Carrier הראשי
 
-    public CarrierRowAdapter(ArrayList<CarrierRowItem> innerItems, Fragment fragment) {
+    public CarrierRowAdapter(ArrayList<CarrierRowItem> innerItems, Fragment fragment, int parentIndex) {
         this.innerItems = innerItems;
         this.fragment = fragment;
+        this.parentIndex = parentIndex;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        View view = LayoutInflater.from(context)
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.carrier_row_item, parent, false);
         return new ViewHolder(view);
     }
@@ -44,38 +44,34 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
         CarrierRowItem item = innerItems.get(position);
 
         holder.txtSubTopic.setText(item.getSubTopic());
-        holder.positionNumber.setText("" + (position + 1)); // מספר השורה
+        holder.positionNumber.setText("" + (position + 1));
 
         // כפתור עריכה
-        if (holder.btnEdit != null) {
-            holder.btnEdit.setOnClickListener(v -> {
-                Intent intent = new Intent(fragment.getContext(), New_problem.class);
-                intent.putExtra("carrier", item.getCarrier());
-                intent.putExtra("subTopic", item.getSubTopic());
-                intent.putExtra("description", item.getDescription());
-                intent.putExtra("remark", item.getRemark());
-                intent.putExtra("date", item.getDate());
-                intent.putParcelableArrayListExtra("selectedImages", item.getImages());
-                intent.putParcelableArrayListExtra("standardItems", item.getStandard());
-                intent.putParcelableArrayListExtra("recommendationsItems", item.getRecommendations());
-                intent.putExtra("parentPosition", position);
+        holder.btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(fragment.getContext(), New_problem.class);
+            intent.putExtra("carrier", item.getCarrier());
+            intent.putExtra("subTopic", item.getSubTopic());
+            intent.putExtra("description", item.getDescription());
+            intent.putExtra("remark", item.getRemark());
+            intent.putExtra("date", item.getDate());
+            intent.putParcelableArrayListExtra("selectedImages", item.getImages());
+            intent.putParcelableArrayListExtra("standardItems", item.getStandard());
+            intent.putParcelableArrayListExtra("recommendationsItems", item.getRecommendations());
 
-                if (fragment instanceof Problems) {
-                    ((Problems) fragment).startActivityForResult(intent, 4);
-                } else {
-                    fragment.startActivity(intent);
-                }
-            });
-        }
+            // שולחים גם את parentIndex וה-innerIndex
+            if (fragment instanceof Problems) {
+                ((Problems) fragment).launchEditInner(intent, parentIndex, position);
+            } else {
+                fragment.startActivity(intent);
+            }
+        });
 
         // כפתור מחיקה
-        if (holder.btnDelete != null) {
-            holder.btnDelete.setOnClickListener(v -> {
-                innerItems.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, innerItems.size()); // עדכון מספרי שורות מתחת
-            });
-        }
+        holder.btnDelete.setOnClickListener(v -> {
+            innerItems.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, innerItems.size());
+        });
     }
 
     @Override
@@ -83,29 +79,19 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
         return innerItems.size();
     }
 
-    public void addItem(CarrierRowItem newItem) {
-        innerItems.add(newItem);
-        notifyItemInserted(innerItems.size() - 1);
-    }
-
     public void updateItems(ArrayList<CarrierRowItem> newItems) {
         this.innerItems = newItems;
         notifyDataSetChanged();
     }
 
-    // הזזת פריט בתוך ה-RecyclerView הפנימי
     public void moveItem(int fromPosition, int toPosition) {
         if (fromPosition < 0 || toPosition < 0 || fromPosition >= innerItems.size() || toPosition >= innerItems.size())
             return;
-
         Collections.swap(innerItems, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
-        // עדכון מספרי שורות של כל הפריטים שנפגעו
-        notifyItemRangeChanged(Math.min(fromPosition, toPosition),
-                Math.abs(fromPosition - toPosition) + 1);
+        notifyItemRangeChanged(Math.min(fromPosition, toPosition), Math.abs(fromPosition - toPosition) + 1);
     }
 
-    // הפעלת ItemTouchHelper ל-Drag & Drop
     public ItemTouchHelper getItemTouchHelper() {
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
@@ -113,28 +99,18 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
             public boolean onMove(@NonNull RecyclerView recyclerView,
                                   @NonNull RecyclerView.ViewHolder viewHolder,
                                   @NonNull RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
-                moveItem(fromPosition, toPosition);
+                moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                // אין סווייפ למחיקה
-            }
-
-            @Override
-            public boolean isLongPressDragEnabled() {
-                return true;
-            }
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {}
         };
         return new ItemTouchHelper(callback);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtSubTopic;
-        TextView positionNumber; // מספר השורה
+        TextView txtSubTopic, positionNumber;
         ImageButton btnEdit, btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
@@ -145,11 +121,4 @@ public class CarrierRowAdapter extends RecyclerView.Adapter<CarrierRowAdapter.Vi
             btnDelete = itemView.findViewById(R.id.deleteButton);
         }
     }
-
-    public void updateItem(int position, CarrierRowItem updatedItem) {
-        if (position < 0 || position >= innerItems.size()) return;
-        innerItems.set(position, updatedItem);
-        notifyItemChanged(position);
-    }
-
 }

@@ -36,6 +36,7 @@ public class Problems extends Fragment {
     private ActivityResultLauncher<Intent> addCarrierLauncher;
     private ActivityResultLauncher<Intent> editLauncher;
     private ActivityResultLauncher<Intent> newProblemLauncher;
+    private ActivityResultLauncher<Intent> editInnerLauncher; // launcher לעריכת שורות פנימיות
 
     @Nullable
     @Override
@@ -78,8 +79,6 @@ public class Problems extends Fragment {
             Intent intent = new Intent(requireActivity(), AddCreditor.class);
             addCarrierLauncher.launch(intent);
         });
-
-
 
         return view;
     }
@@ -156,10 +155,47 @@ public class Problems extends Fragment {
                     }
                 }
         );
+
+        // Edit Inner Item
+        editInnerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
+                        Intent data = result.getData();
+                        int parentIndex = data.getIntExtra("parentIndex", -1);
+                        int innerIndex = data.getIntExtra("innerIndex", -1);
+
+                        if (parentIndex != -1 && innerIndex != -1) {
+                            String carrier = data.getStringExtra("carrier");
+                            String subTopic = data.getStringExtra("subTopic");
+                            String description = data.getStringExtra("description");
+                            String remark = data.getStringExtra("remark");
+                            String date = data.getStringExtra("date");
+                            ArrayList<standardItem> standardItems = data.getParcelableArrayListExtra("standardItems");
+                            ArrayList<RecommendationsItem> recommendationsItems = data.getParcelableArrayListExtra("recommendationsItems");
+                            ArrayList<Uri> selectedImages = data.getParcelableArrayListExtra("selectedImages");
+
+                            CarrierRowItem updatedItem = new CarrierRowItem(carrier, subTopic, description, remark, date,
+                                    standardItems, recommendationsItems, selectedImages);
+
+                            carrierItem parent = items.get(parentIndex);
+                            parent.getInnerItems().set(innerIndex, updatedItem);
+                            adapter.notifyItemChanged(parentIndex);
+                        }
+                    }
+                }
+        );
     }
 
     // פונקציה ציבורית שנקראת מה-adapter כדי לערוך Carrier
     public void launchEditCarrier(Intent intent) {
         editLauncher.launch(intent);
+    }
+
+    // פונקציה ציבורית שנקראת מה-CarrierRowAdapter כדי לערוך פריט פנימי
+    public void launchEditInner(Intent intent, int parentIndex, int innerIndex) {
+        intent.putExtra("parentIndex", parentIndex);
+        intent.putExtra("innerIndex", innerIndex);
+        editInnerLauncher.launch(intent);
     }
 }

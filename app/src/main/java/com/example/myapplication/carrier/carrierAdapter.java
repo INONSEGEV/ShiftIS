@@ -1,6 +1,7 @@
 // carrierAdapter.java
 package com.example.myapplication.carrier;
 
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.CarrierRow.CarrierRowAdapter;
 import com.example.myapplication.R;
 import com.example.myapplication.Problems;
+import com.example.myapplication.Recommendations.EditItemRecommendations;
 
 import java.util.ArrayList;
 import java.util.function.IntConsumer;
@@ -51,9 +53,11 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
 
         // אתחול Inner RecyclerView
         if (holder.innerAdapter == null) {
-            holder.innerAdapter = new CarrierRowAdapter(item.getInnerItems(), fragment);
+            holder.innerAdapter = new CarrierRowAdapter(item.getInnerItems(), fragment, position);
             holder.recyclerViewInner.setLayoutManager(new LinearLayoutManager(fragment.requireContext()));
             holder.recyclerViewInner.setAdapter(holder.innerAdapter);
+            holder.innerAdapter.getItemTouchHelper().attachToRecyclerView(holder.recyclerViewInner);
+
 
             // חיבור ItemTouchHelper פנימי
             holder.innerAdapter.getItemTouchHelper().attachToRecyclerView(holder.recyclerViewInner);
@@ -84,9 +88,14 @@ public class carrierAdapter extends RecyclerView.Adapter<carrierAdapter.ViewHold
         // כפתור עריכה
         holder.btnEdit.setOnClickListener(v -> {
             if (fragment instanceof Problems) {
-                ((Problems) fragment).launchEditCarrier(item.getEditIntent(fragment.requireContext(), position));
+                Intent intent = new Intent(fragment.requireContext(), EditCarrier.class);
+                intent.putExtra("position", position);
+                intent.putExtra("carrier", item.getCarrierName());
+                ((Problems) fragment).launchEditCarrier(intent);
+
             }
         });
+
 
         // כפתור מחיקה
         holder.deleteButton.setOnClickListener(v -> {

@@ -10,7 +10,7 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
@@ -29,22 +29,33 @@
             android:exported="false" />
         <activity
             android:name=".standard.AddStandard"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".carrier.AddCreditor"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".carrier.EditCarrier"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".standard.EditStandard"
-            android:exported="false"></activity>
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".Recommendations.AddRecommendations"
-            android:exported="false"></activity>
+            android:exported="false">
+        </activity>
         <activity
             android:name=".Recommendations.EditItemRecommendations"
-            android:exported="false"></activity> <!-- You might have intent filters here depending on how you start this activity -->
+            android:exported="false">
+
+        </activity> <!-- You might have intent filters here depending on how you start this activity -->
         <activity
             android:name=".CameraActivity"
             android:exported="true"

@@ -5,7 +5,6 @@
     <string name="first_fragment_label">פרגמנט ראשון</string>
     <string name="second_fragment_label">פרגמנט שני</string>
     <string name="next">הבא</string>
-
     <string-array name="options_array">
         <item>אפשרות 1</item>
         <item>אפשרות 2</item>
@@ -40,7 +39,7 @@
     <string name="new_find">ממצא חדש</string>
     <string name="carrier">נושא</string>
     <string name="sub_topic">תת נושא</string>
-    <string name="description">תואר</string>
+    <string name="description">תאור</string>
     <string name="remark">הערה</string>
     <string name="adding_standard_contrast">הוספת ניגוד תקן</string>
     <string name="add_a_price_recommendation">הוספת המלצת מחיר</string>
