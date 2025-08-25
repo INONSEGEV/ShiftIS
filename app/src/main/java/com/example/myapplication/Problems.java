@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +37,7 @@ public class Problems extends Fragment {
     private ActivityResultLauncher<Intent> addCarrierLauncher;
     private ActivityResultLauncher<Intent> editLauncher;
     private ActivityResultLauncher<Intent> newProblemLauncher;
-    private ActivityResultLauncher<Intent> editInnerLauncher; // launcher לעריכת שורות פנימיות
+    private ActivityResultLauncher<Intent> editInnerLauncher;
 
     @Nullable
     @Override
@@ -51,21 +52,17 @@ public class Problems extends Fragment {
 
         adapter = new carrierAdapter(this, items, position -> {
             carrierItem carrierRow = items.get(position);
-
             Intent intent = new Intent(requireActivity(), New_problem.class);
             intent.putExtra("parentPosition", position);
             intent.putExtra("carrier", carrierRow.getCarrierName());
-
-            newProblemLauncher.launch(intent); // השורה היחידה שמפעילה את New_problem
+            newProblemLauncher.launch(intent);
         });
-
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
         setupLaunchers();
 
-        // גרירה של CarrierItems ראשיים
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
@@ -82,6 +79,7 @@ public class Problems extends Fragment {
 
         addButton.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), AddCreditor.class);
+            intent.putStringArrayListExtra("existingNames", getCarrierNames());
             addCarrierLauncher.launch(intent);
         });
 
@@ -96,6 +94,10 @@ public class Problems extends Fragment {
                     if (result.getResultCode() == getActivity().RESULT_OK && result.getData() != null) {
                         String carrierName = result.getData().getStringExtra("carrier");
                         if (carrierName != null) {
+                            if (getCarrierNames().contains(carrierName)) {
+                                Toast.makeText(requireContext(), "Carrier בשם זה כבר קיים!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             carrierItem newItem = new carrierItem(carrierName);
                             items.add(newItem);
                             adapter.notifyItemInserted(items.size() - 1);
@@ -112,6 +114,12 @@ public class Problems extends Fragment {
                         int position = result.getData().getIntExtra("position", -1);
                         String newCarrierName = result.getData().getStringExtra("newCarrier");
                         if (position != -1 && newCarrierName != null) {
+                            for (int i = 0; i < items.size(); i++) {
+                                if (i != position && items.get(i).getCarrierName().equals(newCarrierName)) {
+                                    Toast.makeText(requireContext(), "Carrier בשם זה כבר קיים!", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+                            }
                             carrierItem item = items.get(position);
                             item.setCarrierName(newCarrierName);
                             adapter.notifyItemChanged(position);
@@ -192,15 +200,21 @@ public class Problems extends Fragment {
         );
     }
 
-    // פונקציה ציבורית שנקראת מה-adapter כדי לערוך Carrier
     public void launchEditCarrier(Intent intent) {
         editLauncher.launch(intent);
     }
 
-    // פונקציה ציבורית שנקראת מה-CarrierRowAdapter כדי לערוך פריט פנימי
     public void launchEditInner(Intent intent, int parentIndex, int innerIndex) {
         intent.putExtra("parentIndex", parentIndex);
         intent.putExtra("innerIndex", innerIndex);
         editInnerLauncher.launch(intent);
+    }
+
+    public ArrayList<String> getCarrierNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (carrierItem item : items) {
+            names.add(item.getCarrierName());
+        }
+        return names;
     }
 }
