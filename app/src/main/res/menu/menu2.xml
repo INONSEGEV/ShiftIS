@@ -1,9 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/btn_create_a_report"
+        android:title="@string/create_a_report"
+        app:showAsAction="always"
+        app:actionLayout="@layout/btn_create_report"
+        android:orderInCategory="101" />
+
+    <item
+        android:id="@+id/btnSave"
         android:title="@string/save"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        app:actionLayout="@layout/save_project"
+        android:orderInCategory="101" />
+
+
 
 
 </menu>

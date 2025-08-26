@@ -36,7 +36,7 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_background"
-        android:src="@drawable/ic_add_document_modern"
+        android:src="?android:attr/textCheckMarkInverse"
         android:tint="#ffffff"
         android:elevation="6dp" />
 

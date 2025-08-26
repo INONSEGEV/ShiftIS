@@ -38,7 +38,7 @@ public class AddCreditor extends AppCompatActivity {
             }
 
             if (existingNames.contains(carrier)) {
-                Toast.makeText(this, "Carrier בשם זה כבר קיים!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "כבר קיים נושא בשם זה", Toast.LENGTH_SHORT).show();
                 return;
             }
 

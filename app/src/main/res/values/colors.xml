@@ -17,7 +17,8 @@
     <color name="background_color">#FFFFFF</color>
     <color name="text_color">#000000</color>
 
-
+    <color name="save_button_color">#4CAF50</color>
+    <color name="save_button_pressed">#2E7D32</color>
 
     <color name="new_document_icon_tint">#FF4CAF50</color>
 

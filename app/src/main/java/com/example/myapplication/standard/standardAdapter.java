@@ -1,5 +1,7 @@
 package com.example.myapplication.standard;
 
+import static android.provider.Settings.System.getString;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -37,7 +39,8 @@ public class standardAdapter extends RecyclerView.Adapter<standardAdapter.ItemVi
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         standardItem item = items.get(position);
 
-        holder.standard.setText(item.getStandard());
+        holder.standard.setText(String.format(context.getString(R.string.standard_number_text), item.getStandard()));
+
 
         // כפתור עריכה
         holder.btnSave.setOnClickListener(v -> {

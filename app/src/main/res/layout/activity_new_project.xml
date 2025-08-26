@@ -14,8 +14,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="25dp"
+
             android:background="@drawable/gradient_background"
-            app:title="@string/home"
+            app:title="@string/filling_out_the_report_details"
             app:titleTextColor="@android:color/white" />
 
         <com.google.android.material.tabs.TabLayout

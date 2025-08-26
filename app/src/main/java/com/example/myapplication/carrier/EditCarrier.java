@@ -45,7 +45,7 @@ public class EditCarrier extends AppCompatActivity {
 
             // בדיקה אם השם כבר קיים ברשימה (ללא הפריט הנוכחי)
             if (existingNames.contains(newCarrier)) {
-                Toast.makeText(this, "Carrier בשם זה כבר קיים!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "כבר קיים נושא בשם זה", Toast.LENGTH_SHORT).show();
                 return; // כאן מונע סיום ה-Activity
             }
 

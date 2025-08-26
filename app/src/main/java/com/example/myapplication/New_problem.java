@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.myapplication.Recommendations.AddRecommendations;
 import com.example.myapplication.Recommendations.RecommendationsAdapter;
 import com.example.myapplication.Recommendations.RecommendationsItem;

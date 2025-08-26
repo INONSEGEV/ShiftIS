@@ -115,5 +115,7 @@
     <string name="lower_cabinets">Lower Cabinets</string>
     <string name="sink">Sink</string>
     <string name="countertop">Countertop</string>
+    <string name="standard_number_text">Standard Number: %1$s</string>
+    <string name="filling_out_the_report_details">Filling out the report</string>
 
 </resources>
